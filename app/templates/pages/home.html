@@ -1,0 +1,15 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>The Classic Mystery Game</h1>
+</div>
+<p class="lead">It's your turn to make a move</p>
+  <form method="post" class="form form-reset">
+    <h3 class="form-heading">Enter Move</h3>
+    {{ form.move(class_ = 'form-control first-input last-input', placeholder = form.move.label.text) }}
+    <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+    {{ form.hidden_tag() }}
+  </form>
+{% endblock %}
