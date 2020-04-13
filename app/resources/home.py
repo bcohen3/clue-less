@@ -9,6 +9,7 @@ blueprint = Blueprint('pages', __name__)
 def home():
     form = MoveForm(request.form)
     game_rules = GameRules()
+    move = None
 
     if request.method == 'POST':
         print(form.data)
@@ -16,7 +17,9 @@ def home():
         if form.validate() is not True:
             print(form.errors)
             return render_template('pages/home.html', form=form)
-        move = form.data['move']
-        print("Game rules for {}: {}".format(move, game_rules.move(move)))
 
-    return render_template('pages/home.html', form=form)
+        entered_move = form.data['move']
+        print("Game rules for {}: {}".format(entered_move, game_rules.move(entered_move)))
+        move = game_rules.move(entered_move)
+
+    return render_template('pages/home.html', form=form, move=move)
