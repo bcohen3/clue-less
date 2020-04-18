@@ -1,8 +1,8 @@
 from flask import render_template, Blueprint, request
-from app.forms.move_form import *
-from app.domain.game_runner import GameRunner
+from app.server.forms.move_form import *
+from app.server.domain.game_runner import GameRunner
 
-blueprint = Blueprint('pages', __name__)
+blueprint = Blueprint('pages', __name__, template_folder='../../../client/templates')
 
 
 @blueprint.route('/', methods=['GET', 'POST'])

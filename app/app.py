@@ -3,7 +3,7 @@ import logging
 from flask import Flask, request as req
 from flask_wtf.csrf import CSRFProtect
 
-from app.api.resources import home
+from app.server.api.resources import home
 from config.app_configuration import SECRET_KEY
 
 
