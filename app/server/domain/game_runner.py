@@ -1,14 +1,60 @@
 from app.server.domain.deck import Deck
+from app.server.domain.envelope import Envelope
 from app.server.domain.game_board import GameBoard
 from app.server.domain.player import Player
 
-
+# TODO create in route with values from game creator
 class GameRunner:
-    playerList = []
-    currentPlayerTurn = Player()
-    gameBoardStatus = GameBoard()
-    deck = Deck()
+    def __init__(self, deck, envelope, player_list, game_board):
+        self.deck = deck
+        self.envelope = envelope
+        self.player_list = player_list
+        self.current_player = player_list[0]
+        self.game_board_status = game_board
+
+    def check_suggestion(self, suggestion):
+        suggestion_cards = suggestion.get_card_ids()
+
+        for player in self.player_list:
+            player_card_ids = player.get_card_ids()
+            card_ids = [i for i in suggestion_cards if i in player_card_ids]
+
+            if len(card_ids) > 0:
+                return self.deck.get_card_data_by_id(card_ids[0])
+
+        return None
+
+    def check_accusation(self, accusation):
+        if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
+            self.current_player.is_winner = True
+        else:
+            self.current_player.is_loser = True
+
+        return self.current_player.is_winner
+
+    # TODO add move player validation
+
+    def move_player(self, x_coordinate, y_coordinate):
+        # TODO make current position blank with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
+        self.current_player.x_coordinate = x_coordinate
+        self.current_player.y_coordinate = y_coordinate
+        # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
+        self.update_current_player()
+
+    # TODO add move weapon validation
 
     @staticmethod
-    def test_method():
-        return True
+    def move_weapon(weapon, x_coordinate, y_coordinate):
+        # TODO make current position blank with weapon.x_coordinate and weapon.y_coordinate
+        weapon.x_coordinate = x_coordinate
+        weapon.y_coordinate = y_coordinate
+        # TODO update current position with weapon.x_coordinate and weapon.y_coordinate
+
+    def update_current_player(self):
+        current_player_id = self.current_player.id
+        next_player_id = current_player_id + 1
+
+        while self.player_list[next_player_id].is_loser is True:
+            next_player_id += 1
+
+        self.current_player = self.player_list[next_player_id]
