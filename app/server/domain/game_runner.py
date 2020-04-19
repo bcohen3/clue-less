@@ -3,12 +3,13 @@ from app.server.domain.envelope import Envelope
 from app.server.domain.game_board import GameBoard
 from app.server.domain.player import Player
 
-# TODO create in route with values from game creator
+
 class GameRunner:
-    def __init__(self, deck, envelope, player_list, game_board):
+    def __init__(self, deck, envelope, player_list, weapon_list, game_board):
         self.deck = deck
         self.envelope = envelope
         self.player_list = player_list
+        self.weapon_list = weapon_list
         self.current_player = player_list[0]
         self.game_board_status = game_board
 
@@ -24,6 +25,10 @@ class GameRunner:
 
         return None
 
+    # TODO add validate accusation
+    def validateAccusation(self):
+        return True
+
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
             self.current_player.is_winner = True
@@ -33,22 +38,39 @@ class GameRunner:
         return self.current_player.is_winner
 
     # TODO add move player validation
+    def validatePlayerMove(self):
+        return True
 
-    def move_player(self, x_coordinate, y_coordinate):
-        # TODO make current position blank with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
-        self.current_player.x_coordinate = x_coordinate
-        self.current_player.y_coordinate = y_coordinate
-        # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
-        self.update_current_player()
+    def move_player(self, palyer_id, x_coordinate, y_coordinate):
+        if self.validatePlayerMove() is True:
+            # TODO make current position blank with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
+            self.current_player.x_coordinate = x_coordinate
+            self.current_player.y_coordinate = y_coordinate
+            # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
+            self.update_current_player()
+            return True
+
+        return False
 
     # TODO add move weapon validation
+    def validate_weapon_move(self):
+        return True
 
-    @staticmethod
-    def move_weapon(weapon, x_coordinate, y_coordinate):
-        # TODO make current position blank with weapon.x_coordinate and weapon.y_coordinate
-        weapon.x_coordinate = x_coordinate
-        weapon.y_coordinate = y_coordinate
-        # TODO update current position with weapon.x_coordinate and weapon.y_coordinate
+    def get_weapon_by_id(self, weapon_id):
+        for weapon in self.weapon_list:
+            if weapon.id == weapon_id:
+                return weapon
+
+    def move_weapon(self, weapon_id, x_coordinate, y_coordinate):
+        if self.validate_weapon_move() is True:
+            weapon = self.get_weapon_by_id(weapon_id)
+            # TODO make current position blank with weapon.x_coordinate and weapon.y_coordinate
+            weapon.x_coordinate = x_coordinate
+            weapon.y_coordinate = y_coordinate
+            # TODO update current position with weapon.x_coordinate and weapon.y_coordinate
+            return True
+
+        return False
 
     def update_current_player(self):
         current_player_id = self.current_player.id

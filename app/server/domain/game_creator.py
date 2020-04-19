@@ -1,6 +1,7 @@
 from app.server.domain.deck import Deck
 from app.server.domain.envelope import Envelope
 from app.server.domain.game_board import GameBoard
+from app.server.domain.game_piece import GamePiece
 from app.server.domain.player import Player
 
 
@@ -14,6 +15,7 @@ class GameCreator:
         self.deck.shuffle()
         self.select_cards_for_envelope()
         self.players = self.create_players(number_of_players)
+        self.weapons = self.create_weapons()
 
         # TODO this probably needs number of players
         self.game_board_status = GameBoard()
@@ -24,6 +26,18 @@ class GameCreator:
         for i in range(number_of_players):  # TODO check to make sure number_of_players < 7
             player_list[i] = Player(i, 0, 0, chunked_cards[i]) # TODO figure out stating position for players
         return player_list
+
+    def create_weapons(self):
+        weapon_list = [None] * 6
+        end_index = self.number_of_players + 6
+
+        # TODO update with proper x and y cooridinates
+        weapon_list_index = 0
+        for i in range(self.number_of_players, end_index):
+            weapon_list[weapon_list_index] = GamePiece(i, 0, 0)
+            weapon_list_index += 1
+
+        return weapon_list
 
     def select_cards_for_envelope(self):
         for card in self.deck.cards:

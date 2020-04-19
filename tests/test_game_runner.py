@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from app.server.domain.deck import Deck
 from app.server.domain.envelope import Envelope
+from app.server.domain.game_piece import GamePiece
 from app.server.domain.game_runner import GameRunner
 from app.server.domain.player import Player
 from app.server.domain.room_card import RoomCard
@@ -19,7 +20,11 @@ class TestGameRunner(TestCase):
         player_one = Player(1, 1, 1, [WeaponCard(8, 'lead pipe')])
         player_two = Player(2, 2, 2, [RoomCard(19, 'library')])
         cls.player_list = [player_zero, player_one, player_two]
-        cls.game_runner = GameRunner(deck, envelope, cls.player_list, 3)
+        weapon_one = GamePiece(3, 3, 3)
+        weapon_two = GamePiece(4, 4, 4)
+        weapon_three = GamePiece(5, 5, 5)
+        weapon_list = [weapon_one, weapon_two, weapon_three]
+        cls.game_runner = GameRunner(deck, envelope, cls.player_list, weapon_list, 3)
 
     def test_sets_the_first_player_as_the_current_player_when_game_starts(self):
         self.assertEqual(0, self.game_runner.current_player.id)
@@ -97,6 +102,10 @@ class TestGameRunner(TestCase):
     #     self.fail()
 
     # TODO check moves weapon correctly
+
+    def test_gets_weapon_by_id(self):
+        weapon = self.game_runner.get_weapon_by_id(5)
+        self.assertEqual(5, weapon.id)
 
     def test_updates_current_player_when_no_players_lost(self):
         self.game_runner.current_player = self.player_list[0]

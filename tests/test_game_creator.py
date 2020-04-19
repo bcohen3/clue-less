@@ -6,7 +6,8 @@ from app.server.domain.game_creator import GameCreator
 class TestGameCreator(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.game_creator = GameCreator(4)
+        cls.number_of_players = 4
+        cls.game_creator = GameCreator(cls.number_of_players)
 
     def test_shuffles_deck_when_new_game_created(self):
         self.assertNotEqual(self.game_creator.deck.cards_by_id, self.game_creator.deck.cards)
@@ -46,5 +47,12 @@ class TestGameCreator(TestCase):
 
     def test_removes_room_card_from_deck(self):
         self.assertNotIn(self.game_creator.envelope.room_card, self.game_creator.deck.cards)
+
+    def test_creates_weapons(self):
+        self.assertEqual(6, len(self.game_creator.weapons))
+
+    def test_creates_weapons_correct_ids(self):
+        self.assertEqual(self.number_of_players, self.game_creator.weapons[0].id)
+        self.assertEqual(self.number_of_players+5, self.game_creator.weapons[5].id)
 
     #TODO test game board creation
