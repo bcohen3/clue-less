@@ -8,7 +8,7 @@ from config.app_configuration import SECRET_KEY
 
 
 def create_app(config_filename):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='client/static')
 
     app.config.from_object(config_filename)
     app.config['SECRET_KEY'] = SECRET_KEY
