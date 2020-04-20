@@ -6,7 +6,6 @@ from app.server.domain.player import Player
 
 
 class GameCreator:
-    # todo call this method in route
     def __init__(self, number_of_players):
         self.number_of_players = number_of_players
         self.deck = Deck()
@@ -23,8 +22,8 @@ class GameCreator:
     def create_players(self, number_of_players):
         player_list = [None] * number_of_players
         chunked_cards = self.deck.chunk_cards(number_of_players)
-        for i in range(number_of_players):  # TODO check to make sure number_of_players < 7
-            player_list[i] = Player(i, 0, 0, chunked_cards[i]) # TODO figure out stating position for players
+        for i in range(number_of_players):
+            player_list[i] = Player(i, 0, 0, chunked_cards[i]) # TODO figure out starting position for players
         return player_list
 
     def create_weapons(self):

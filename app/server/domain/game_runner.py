@@ -23,12 +23,6 @@ class GameRunner:
             if len(card_ids) > 0:
                 return self.deck.get_card_data_by_id(card_ids[0])
 
-        return None
-
-    # TODO add validate accusation
-    def validateAccusation(self):
-        return True
-
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
             self.current_player.is_winner = True
@@ -48,9 +42,6 @@ class GameRunner:
             self.current_player.y_coordinate = y_coordinate
             # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
             self.update_current_player()
-            return True
-
-        return False
 
     # TODO add move weapon validation
     def validate_weapon_move(self):
@@ -68,9 +59,6 @@ class GameRunner:
             weapon.x_coordinate = x_coordinate
             weapon.y_coordinate = y_coordinate
             # TODO update current position with weapon.x_coordinate and weapon.y_coordinate
-            return True
-
-        return False
 
     def update_current_player(self):
         current_player_id = self.current_player.id
