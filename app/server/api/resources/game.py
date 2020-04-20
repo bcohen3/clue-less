@@ -32,8 +32,9 @@ def start_game():
 def game_board():
     move_form = MoveForm()
     suggestion_form = SuggestionForm()
-    card = None
+    current_player = None
     suggestion_message = None
+    accusation_message = None
 
     if request.method == 'POST':
         form = MoveForm(request.form)
@@ -50,39 +51,31 @@ def game_board():
             character_id = form.data['character_id']
             weapon_id = form.data['weapon_id']
             room_id = form.data['room_id']
+            is_accusation = form.data['is_accusation']
 
             character_card = game_runner.deck.get_card_data_by_id(character_id)
             weapon_card = game_runner.deck.get_card_data_by_id(weapon_id)
             room_card = game_runner.deck.get_card_data_by_id(room_id)
             suggestion = Suggestion(character_card, weapon_card, room_card)
 
-            card_that_disproves_suggestion = game_runner.check_suggestion(suggestion)
-            if card_that_disproves_suggestion is None:
-                suggestion_message = "No card disproves suggestion"
+            if is_accusation:
+                player_won = game_runner.check_accusation(suggestion)
+                if player_won:
+                    accusation_message = "Congratulations! Your accusation was correct. You won!"
+                else:
+                    accusation_message = "Sorry, your accusation was incorrect. You lost."
             else:
-                card_type = card_that_disproves_suggestion.type
-                card_value = card_that_disproves_suggestion.value
-                suggestion_message = "A %s card, \"%s\", disproves your suggestion." % (card_type, card_value)
+                card_that_disproves_suggestion = game_runner.check_suggestion(suggestion)
+                if card_that_disproves_suggestion is None:
+                    suggestion_message = "No card disproves suggestion"
+                else:
+                    card_type = card_that_disproves_suggestion.type
+                    card_value = card_that_disproves_suggestion.value
+                    suggestion_message = "A %s card, \"%s\", disproves your suggestion." % (card_type, card_value)
 
     game_board = game_runner.game_board_status.board
+    current_player = game_runner.current_player.id
 
     return render_template('pages/game_board.html', move_form=move_form, suggestion_form=suggestion_form,
-                           game_board=game_board, card=card, suggestion_message=suggestion_message)
-
-
-@blueprint.route('/make-accusation', methods=['POST'])
-def make_accusation():
-    character_id = request.json['characterId']
-    weapon_id = request.json['weaponId']
-    room_id = request.json['roomNameId']
-
-    character_card = game_runner.deck.get_card_data_by_id(character_id)
-    weapon_card = game_runner.deck.get_card_data_by_id(weapon_id)
-    room_card = game_runner.deck.get_card_data_by_id(room_id)
-
-    suggestion = Suggestion(character_card, weapon_card, room_card, True)
-
-    player_won = game_runner.check_accusation(suggestion)
-    game_board = game_runner.game_board_status
-
-    return render_template('pages/home.html', palyer_won=player_won, game_board=game_board)
+                           game_board=game_board, current_player=current_player, suggestion_message=suggestion_message,
+                           accusation_message=accusation_message)

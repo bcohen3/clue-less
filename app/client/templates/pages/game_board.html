@@ -25,8 +25,18 @@
 </div>
 
 <div>
+    <p class="lead">It's your turn, player {{current_player}}</p>
+</div>
+
+<div>
     {% if suggestion_message is not none %}
        <p class="lead">{{suggestion_message}}</p>
+    {% endif %}
+</div>
+
+<div>
+    {% if accusation_message is not none %}
+       <p class="lead">{{accusation_message}}</p>
     {% endif %}
 </div>
 
@@ -54,6 +64,7 @@
     {{ suggestion_form.character_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.character_id.label.text) }}
     {{ suggestion_form.weapon_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.weapon_id.label.text) }}
     {{ suggestion_form.room_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.room_id.label.text) }}
+    {{ suggestion_form.is_accusation(class_ = 'form-control first-input last-input', placeholder = suggestion_form.is_accusation.label.text) }}
     <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
     {{ suggestion_form.hidden_tag() }}
 </form>
