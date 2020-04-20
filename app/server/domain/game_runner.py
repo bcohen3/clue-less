@@ -59,6 +59,7 @@ class GameRunner:
             if weapon.id == weapon_id:
                 return weapon
 
+    # TODO move weapon to room when suggestion is made
     def move_weapon(self, weapon_id, x_coordinate, y_coordinate):
         if self.validate_weapon_move() is True:
             weapon = self.get_weapon_by_id(weapon_id)

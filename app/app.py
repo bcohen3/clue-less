@@ -3,7 +3,7 @@ import logging
 from flask import Flask, request as req
 from flask_wtf.csrf import CSRFProtect
 
-from app.server.api.resources import home
+from app.server.api.resources import game
 from config.app_configuration import SECRET_KEY
 
 
@@ -13,7 +13,7 @@ def create_app(config_filename):
     app.config.from_object(config_filename)
     app.config['SECRET_KEY'] = SECRET_KEY
 
-    app.register_blueprint(home.blueprint)
+    app.register_blueprint(game.blueprint)
 
     app.logger.setLevel(logging.ERROR)
 
