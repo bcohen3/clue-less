@@ -23,8 +23,20 @@
 <div class="page-header">
   <h1>The Classic Mystery Game</h1>
 </div>
+
+
+<table class="table table-striped">
+    {% for row in game_board %}
+        <tr>
+        {% for position in row %}
+            <td>{{ position }}</td>
+        {% endfor %}
+       </tr>
+    {% endfor %}
+</table>
+
 <p class="lead">It's your turn to make a move</p>
-  <form method="post" class="form form-reset">
+  <form method="post" class="move_form form-reset">
     Your move was: {{move}}
     <h3 class="form-heading">Enter Move</h3>
     {{ move_form.move(class_ = 'form-control first-input last-input', placeholder = move_form.move.label.text) }}
@@ -32,11 +44,12 @@
     {{ move_form.hidden_tag() }}
   </form>
 
-<form method="post" class="form form-reset">
+  <form method="post" class="form form-reset">
     Your move was: {{move}}
     <h3 class="form-heading">Enter Move</h3>
     {{ test_form.test(class_ = 'form-control first-input last-input', placeholder = test_form.test.label.text) }}
     <input id="test" type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
     {{ test_form.hidden_tag() }}
   </form>
+
 {% endblock %}

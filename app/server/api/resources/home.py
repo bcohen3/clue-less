@@ -12,10 +12,33 @@ blueprint = Blueprint('pages', __name__, template_folder='../../../client/templa
 game_runner = None
 
 
-@blueprint.route('/game-board', methods=['GET', 'POST'])
+@blueprint.route('/', methods=['GET'])
 def home():
-    move_form = MoveForm(request.form)
-    test_form = TestForm(request.form)
+    return render_template('pages/home.html')
+
+@blueprint.route('/start-game', methods=['GET'])
+def start_game():
+    global game_runner
+    number_of_players = 6
+    created_game = GameCreator(number_of_players)
+
+    game_runner = GameRunner(created_game.deck, created_game.envelope, created_game.players,
+                             created_game.weapons, created_game.game_board_status)
+    game_board = game_runner.game_board_status.board
+
+    move_form = MoveForm()
+    test_form = TestForm()
+
+    # TODO delete me
+    entered_move = 'my move'
+
+    return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move,
+                           game_board=game_board)
+
+@blueprint.route('/game-board', methods=['GET', 'POST'])
+def game_board():
+    move_form = MoveForm()
+    test_form = TestForm()
     entered_move = None
 
     if request.method == 'POST':
@@ -36,19 +59,6 @@ def home():
         # entered_move = form.data['move']
 
     return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move)
-
-
-@blueprint.route('/new-game', methods=['POST'])
-def start_game():
-    global game_runner
-    number_of_players = request.json['number_of_players']
-    created_game = GameCreator(number_of_players)
-
-    game_runner = GameRunner(created_game.deck, created_game.envelope, created_game.players,
-                             created_game.weapons, created_game.game_board_status)
-    game_board = game_runner.game_board_status
-
-    return render_template('pages/GameUI.html', form=form, game_board=game_board)
 
 
 @blueprint.route('/move-player', methods=['POST'])
