@@ -63,5 +63,6 @@ class TestGameCreator(TestCase):
         board = self.game_creator.game_board_status.board
         self.assertEqual(0, board[1][7])
         self.assertEqual(1, board[9][7])
-        self.assertEqual(2, board[7][0])
+        self.assertEqual(2, board[7][1])
         self.assertEqual(3, board[3][9])
+
