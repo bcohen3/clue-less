@@ -38,7 +38,7 @@ def start_game():
                              created_game.weapons, created_game.game_board_status)
     game_board = game_runner.game_board_status
 
-    return render_template('pages/home.html', game_board=game_board)
+    return render_template('pages/GameUI.html', game_board=game_board)
 
 
 @blueprint.route('/move-player', methods=['POST'])

@@ -1,0 +1,124 @@
+<html>
+<head>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
+  background-color: #1461ae;
+  padding: 10px;
+}
+.grid-container > div {
+  background-color: #eef5fb;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
+  font-family: Arial;
+}
+.Room1 {
+grid-area: 1 / 1 / span 3 / span 3;
+}
+.Room2 {
+grid-area: 1 / 5 / span 3 / span 3;
+}
+.Room3 {
+grid-area: 1 / 9 / span 3 / span 3;
+}
+.Room4 {
+grid-area: 5 / 1 / span 3 / span 3;
+}
+.Room5 {
+grid-area: 5 / 5 / span 3 / span 3;
+}
+.Room6 {
+grid-area: 5 / 9 / span 3 / span 3;
+}
+.Room7 {
+grid-area: 9 / 1 / span 3 / span 3;
+}
+.Room8 {
+grid-area: 9 / 5 / span 3 / span 3;
+}
+.Room9 {
+grid-area: 9 / 9 / span 3 / span 3;
+}
+
+.HWc1 {
+grid-area: 1 / 4 / span 3 / span 1;
+}
+.HWc2 {
+grid-area: 1 / 8 / span 3 / span 1;
+}
+.HWc3 {
+grid-area: 5 / 4 / span 3 / span 1;
+}
+.HWc4 {
+grid-area: 5 / 8 / span 3 / span 1;
+}
+.HWc5 {
+grid-area: 9 / 4 / span 3 / span 1;
+}
+.HWc6 {
+grid-area: 9 / 8 / span 3 / span 1;
+}
+
+.HWr1 {
+grid-area: 4 / 1 / span 1 / span 3;
+}
+.HWr2 {
+grid-area: 4 / 5 / span 1 / span 3;
+}
+.HWr3 {
+grid-area: 4 / 9 / span 1 / span 3;
+}
+.HWr4 {
+grid-area: 8 / 1 / span 1 / span 3;
+}
+.HWr5 {
+grid-area: 8 / 5 / span 1 / span 3;
+}
+.HWr6 {
+grid-area: 8 / 9 / span 1 / span 3;
+}
+</style>
+</head>
+
+<body style="background-color:#104E8B;">
+<!-- header-->
+<div class="page-header"><font color="#FF8000">
+  <h1><center>The Classic Mystery Game</center></h1>
+</font>
+</div>
+
+<div class="grid-container">
+  <div id="12" class="Room1">Kitchen</div>
+  <div id="13" class="Room2">Ballroom</div>
+  <div id="14" class="Room3">Conservatory</div>
+  <div id="15" class="Room4">Dining Room</div>
+  <div id="16" class="Room5">Lounge</div>
+  <div id="17" class="Room6">Hall</div>
+  <div id="18" class="Room7">Study</div>
+  <div id="19" class="Room8">Library</div>
+  <div id="20" class="Room9">Billiard Room</div>
+  <div class="HWc1"></div>
+  <div class="HWc2"></div>
+  <div class="HWc3"></div>
+  <div class="HWc4"></div>
+  <div class="HWc5"></div>
+  <div class="HWc6"></div>
+  <div class="HWr1">Hallway</div>
+  <div class="HWr2">Hallway</div>
+  <div class="HWr3">Hallway</div>
+  <div class="HWr4">Hallway</div>
+  <div class="HWr5">Hallway</div>
+  <div class="HWr6">Hallway</div>
+</div>
+
+<div align="right">
+  <button href="" class="btn btn-primary btn-warning" type="submit">Make a Suggestion</button>
+  <button href="" class="btn btn-primary btn-warning" type="submit">Move Player</button>
+</div>
+
+</body>
+</html>
