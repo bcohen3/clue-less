@@ -29,7 +29,7 @@
 </div>
 
 <div>
-    {% if suggestion_message is not none %}
+    {% if suggestion_message %}
        <p class="lead">{{suggestion_message}}</p>
     {% endif %}
 </div>
@@ -59,13 +59,19 @@
     {{ move_form.hidden_tag() }}
 </form>
 
-<form method="post" class="move_form form-reset">
+<form method="post" class="suggestion_form form-reset">
     <h3 class="form-heading">Make Suggestion</h3>
     {{ suggestion_form.character_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.character_id.label.text) }}
     {{ suggestion_form.weapon_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.weapon_id.label.text) }}
     {{ suggestion_form.room_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.room_id.label.text) }}
     {{ suggestion_form.is_accusation(class_ = 'form-control first-input last-input', placeholder = suggestion_form.is_accusation.label.text) }}
-    <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+
+    {% if suggestion_message %}
+        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block" disabled>
+    {% else %}
+        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+    {% endif %}
+
     {{ suggestion_form.hidden_tag() }}
 </form>
 

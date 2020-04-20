@@ -32,7 +32,6 @@ def start_game():
 def game_board():
     move_form = MoveForm()
     suggestion_form = SuggestionForm()
-    current_player = None
     suggestion_message = None
     accusation_message = None
 
