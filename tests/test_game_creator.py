@@ -22,13 +22,11 @@ class TestGameCreator(TestCase):
         self.assertEqual(5, len(self.game_creator.players[0].cards))
         self.assertEqual(4, len(self.game_creator.players[3].cards))
 
-    # TODO change assertion value when know where player 3 starts
     def test_gives_players_x_coordinate_when_new_game_created(self):
-        self.assertEqual(0, self.game_creator.players[2].x_coordinate)
+        self.assertEqual(7, self.game_creator.players[1].x_coordinate)
 
-    # TODO change assertion value when know where player 3 starts
     def test_gives_players_y_coordinate_when_new_game_created(self):
-        self.assertEqual(0, self.game_creator.players[2].y_coordinate)
+        self.assertEqual(9, self.game_creator.players[1].y_coordinate)
 
     def test_selects_suspect_card_for_envelope(self):
         self.assertEqual('suspect', self.game_creator.envelope.suspect_card.type)
@@ -55,4 +53,15 @@ class TestGameCreator(TestCase):
         self.assertEqual(self.number_of_players, self.game_creator.weapons[0].id)
         self.assertEqual(self.number_of_players+5, self.game_creator.weapons[5].id)
 
-    #TODO test game board creation
+    def test_creates_game_board_with_appropriate_number_of_rows(self):
+        self.assertEqual(11, len(self.game_creator.game_board_status.board))
+
+    def test_creates_game_board_with_appropriate_number_of_columns(self):
+        self.assertEqual(11, len(self.game_creator.game_board_status.board[0]))
+
+    def test_adds_players_to_game_board(self):
+        board = self.game_creator.game_board_status.board
+        self.assertEqual(0, board[1][7])
+        self.assertEqual(1, board[9][7])
+        self.assertEqual(2, board[7][0])
+        self.assertEqual(3, board[3][9])

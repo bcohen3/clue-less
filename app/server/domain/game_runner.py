@@ -1,6 +1,3 @@
-from collections import namedtuple
-
-
 class GameRunner:
     def __init__(self, deck, envelope, player_list, weapon_list, game_board):
         self.deck = deck
@@ -14,8 +11,7 @@ class GameRunner:
         suspect_id = suggestion.suspect_card.id
         room_id = suggestion.room_card.id
 
-        # todo move accused player to room
-        # self.move_to_room(suspect_id, room_id)
+        self.move_to_room(suspect_id, room_id)
 
         suggestion_cards = suggestion.get_card_ids()
         for player in self.player_list:
@@ -28,18 +24,11 @@ class GameRunner:
         return None
 
     def move_to_room(self, player_id, room_id):
-        # todo make sure this method is there
-        free_spot = self.find_free_spot_in_room(room_id)
+        free_spot = self.game_board_status.find_free_spot_in_room(room_id)
         x_coordinate = free_spot.x_coordinate
         y_coordinate = free_spot.y_coordinate
 
         self.move_player(player_id, x_coordinate, y_coordinate)
-
-    def find_free_spot_in_room(self, room_id):
-        # todo make this return named tuple
-        room = self.game_board_status.find_free_sport_in_room(room_id)
-        Location = namedtuple('location', 'x_coordinate y_coordinate')
-        return Location(room.x_coordinate, room.y_coordinate)
 
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
@@ -53,13 +42,13 @@ class GameRunner:
     def validatePlayerMove(self):
         return True
 
+    # TODO how will client send this data?
     def move_player(self, player_id, x_coordinate, y_coordinate):
         player = self.player_list[player_id]
         if self.validatePlayerMove() is True:
-            # TODO make current position blank with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
-            player.x_coordinate = x_coordinate
-            player.y_coordinate = y_coordinate
-            # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
+            self.game_board_status.board[player.x_coordinate][player.y_coordinate] = 'b'
+            player.update_coordinates(x_coordinate, y_coordinate)
+            self.game_board_status.board[player.x_coordinate][player.y_coordinate] = player_id
 
     # TODO add move weapon validation
     def validate_weapon_move(self):
@@ -73,10 +62,9 @@ class GameRunner:
     def move_weapon(self, weapon_id, x_coordinate, y_coordinate):
         if self.validate_weapon_move() is True:
             weapon = self.get_weapon_by_id(weapon_id)
-            # TODO make current position blank with weapon.x_coordinate and weapon.y_coordinate
-            weapon.x_coordinate = x_coordinate
-            weapon.y_coordinate = y_coordinate
-            # TODO update current position with weapon.x_coordinate and weapon.y_coordinate
+            self.game_board_status.board[weapon.x_coordinate][weapon.y_coordinate] = 'b'
+            weapon.up_coordinatea(x_coordinate, y_coordinate)
+            self.game_board_status.board[weapon.x_coordinate][weapon.y_coordinate] = weapon_id
 
     def update_current_player(self):
         current_player_id = self.current_player.id

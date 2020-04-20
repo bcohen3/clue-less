@@ -1,4 +1,5 @@
-import numpy as np
+from collections import namedtuple
+
 
 ######################################################################
 #
@@ -10,7 +11,7 @@ import numpy as np
 #
 ######################################################################
 
-#BEGIN: GameBoard class
+# BEGIN: GameBoard class
 class GameBoard:
     # init(self)
     #
@@ -21,66 +22,103 @@ class GameBoard:
     # @author: Patricia Dunlap
     #
     def __init__(self):
-        #BEGIN: Create room, hallways and home attributes
-        #build corner room dictionaries
+        self.board = [
+            ['b', 'b', 'b', 'x', 'b', 'b', 'b', 'x', 'b', 'b', 'b'],
+            ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
+            ['b', 'b', 'p', 'x', 'b', 'b', 'b', 'x', 'p', 'b', 'b'],
+            ['b', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'b'],
+            ['b', 'b', 'b', 'x', 'b', 'b', 'b', 'x', 'b', 'b', 'b'],
+            ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
+            ['b', 'b', 'b', 'x', 'b', 'b', 'b', 'x', 'b', 'b', 'b'],
+            ['b', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'b'],
+            ['b', 'b', 'p', 'x', 'b', 'b', 'b', 'x', 'p', 'b', 'b'],
+            ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
+            ['b', 'b', 'b', 'x', 'b', 'b', 'b', 'x', 'b', 'b', 'b']
+        ]
+
+        # BEGIN: Create room, hallways and home attributes
         self.studyRoomDict = {
             "id": 18,
             "name": "study",
             "isCornerRoom": 1,
-            "type": "room"
-        }
-        self.loungeRoomDict = {
-            "id": 16,
-            "name": "lounge",
-            "isCornerRoom": 1,
-            "type": "room"
-        }
-        self.conservatoryRoomDict = {
-            "id": 14,
-            "name": "conservatory",
-            "isCornerRoom": 1,
-            "type": "room"
-        }
-        self.kitchenGDict = {
-            "id": 12,
-            "name": "kitchen",
-            "isCornerRoom": 1,
-            "type": "room"
+            "type": "room",
+            "x_index": 0,
+            "y_index": 0
         }
 
-        #build non-corner room dictionaries
         self.hallRoomDict = {
             "id": 17,
             "name": "hall",
             "isCornerRoom": 0,
-            "type": "room"
+            "type": "room",
+            "x_index": 4,
+            "y_index": 0
         }
+
+        self.loungeRoomDict = {
+            "id": 16,
+            "name": "lounge",
+            "isCornerRoom": 1,
+            "type": "room",
+            "x_index": 8,
+            "y_index": 0
+        }
+
         self.libraryRoomDict = {
             "id": 19,
             "name": "library",
             "isCornerRoom": 0,
-            "type": "room"
+            "type": "room",
+            "x_index": 0,
+            "y_index": 4
         }
+
         self.billiardRoomDict = {
             "id": 20,
             "name": "billiard room",
             "isCornerRoom": 0,
-            "type": "room"
+            "type": "room",
+            "x_index": 4,
+            "y_index": 4
         }
+
         self.diningRoomDict = {
             "id": 15,
             "name": "dining",
             "isCornerRoom": 0,
-            "type": "room"
+            "type": "room",
+            "x_index": 8,
+            "y_index": 4
         }
+
+        self.conservatoryRoomDict = {
+            "id": 14,
+            "name": "conservatory",
+            "isCornerRoom": 1,
+            "type": "room",
+            "x_index": 0,
+            "y_index": 8
+        }
+
         self.ballroomRoomDict = {
             "id": 13,
             "name": "ball room",
             "isCornerRoom": 0,
-            "type": "room"
+            "type": "room",
+            "x_index": 4,
+            "y_index": 8
         }
 
-        #build hallway dictionaries
+        self.kitchenDict = {
+            "id": 12,
+            "name": "kitchen",
+            "isCornerRoom": 1,
+            "type": "room",
+            "x_index": 8,
+            "y_index": 8
+        }
+
+        # build hallway dictionaries
         self.hallwayADict = {
             "id": 21,
             "name": "hallway a",
@@ -191,32 +229,35 @@ class GameBoard:
             "isCornerRoom": 0,
             "type": "home space"
         }
-        # END: Create room, hallways and home attributes
 
+        self.rooms = [self.studyRoomDict, self.hallRoomDict, self.loungeRoomDict, self.libraryRoomDict,
+                      self.billiardRoomDict, self.diningRoomDict, self.conservatoryRoomDict, self.ballroomRoomDict,
+                      self.kitchenDict]
 
-        # createGameBoardMatrix()
-        #
-        # This method accepts no parameters and creates the game board array.
-        #
-        # postcondition: The method creates the GameBoard array and returns it.
-        #
-        # @author: Patricia Dunlap
-        #
-        def createGameBoardMatrix():
-            # Build GameBoardArray matrix
-            self.gameBoardArray = np.array(
-                [18, 18, 18, 21, 17, 17, 17, 22, 16, 16, 16],
-                [18, 18, 18, 0, 17, 17, 17, 0, 16, 16, 16],
-                [18, 18, 18, 0, 17, 17, 17, 0, 16, 16, 16],
-                [23, 0, 0, 25, 0, 0, 0, 0, 0, 0, 27],
-                [19, 19, 19, 24, 20, 20, 20, 26, 15, 15, 15],
-                [19, 19, 19, 0, 20, 20, 20, 0, 15, 15, 15],
-                [19, 19, 19, 0, 20, 20, 20, 0, 15, 15, 15],
-                [28, 0, 0, 29, 0, 0, 0, 0, 0, 0, 30],
-                [14, 14, 14, 31, 13, 13, 13, 32, 12, 12, 12],
-                [14, 14, 14, 0, 13, 13, 13, 0, 12, 12, 12],
-                [14, 14, 14, 0, 13, 13, 13, 0, 12, 12, 12])
+    def find_free_spot_in_room(self, room_id):
+        Point = namedtuple('Point', 'x_coordinate y_coordinate')
+        for room in self.rooms:
+            if room['id'] == room_id:
+                x = room['x_index']
+                y = room['y_index']
+                for y_coordinate in range(y, y+3):
+                    for x_coordinate in range(x, x+3):
+                        if self.board[y_coordinate][x_coordinate] == 'b':
+                            return Point(x_coordinate, y_coordinate)
+        return None
 
-            gameBoardMatrix = self.gameBoardArray
+    def find_player_in_room(self, player_id, room_id):
+        Point = namedtuple('Point', 'x_coordinate y_coordinate')
+        for room in self.rooms:
+            if room['id'] == room_id:
+                x = room['x_index']
+                y = room['y_index']
+                for y_coordinate in range(y, y+3):
+                    for x_coordinate in range(x, x+3):
+                        if self.board[y_coordinate][x_coordinate] == player_id:
+                            return Point(x_coordinate, y_coordinate)
+        return None
 
-            return gameBoardMatrix
+    def print_board(self):
+        for row in self.board:
+            print(" ".join(map(str, row)))

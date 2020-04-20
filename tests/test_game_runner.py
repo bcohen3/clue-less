@@ -67,9 +67,15 @@ class TestGameRunner(TestCase):
 
         self.assertEqual(0, card_held_by_player.id)
 
-    # TODO finish this
-    # def test_moves_accused_player_to_accused_room(self):
-    #     self.fail()
+    def test_moves_suggested_player_to_accused_room(self):
+        suspect_card = SuspectCard(0, 'Miss Scarlet')
+        weapon_card = WeaponCard(9, 'rope')
+        room_card = RoomCard(18, 'study')
+        suggestion = Suggestion(suspect_card, weapon_card, room_card)
+        self.game_runner.check_suggestion(suggestion)
+
+        player_in_room = self.game_runner.game_board_status.find_player_in_room(0, 18)
+        self.assertIsNotNone(player_in_room)
 
     def test_ends_game_when_correct_accusation_made(self):
         suspect_card = SuspectCard(0, 'Miss Scarlet')
@@ -103,15 +109,14 @@ class TestGameRunner(TestCase):
         self.assertFalse(is_accusation_correct)
         self.assertTrue(self.game_runner.current_player.is_loser)
 
-    # TODO check moves player correctly
-    # def test_updates_current_player_after_move(self):
-    #     self.fail()
+    def test_updates_current_player_after_move(self):
+        player = self.game_runner.player_list[0]
+        self.game_runner.move_player(0, 5, 6)
+
+        self.assertEqual(5, player.x_coordinate)
+        self.assertEqual(6, player.y_coordinate)
 
     # TODO check moves weapon correctly
-
-    # TODO test move to room
-
-    # TODO test find free spot in room
 
     def test_gets_weapon_by_id(self):
         weapon = self.game_runner.get_weapon_by_id(5)
