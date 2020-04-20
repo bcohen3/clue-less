@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField
-from wtforms.validators import DataRequired, AnyOf
+from wtforms import IntegerField
+from wtforms.validators import InputRequired
 
 
 class MoveForm(FlaskForm):
-    move = TextField(
-        validators=[DataRequired(), AnyOf(['left', 'right', 'up', 'down'])]
-    )
+    player_id = IntegerField(validators=[InputRequired()])
+
+    x_coordinate = IntegerField(validators=[InputRequired()])
+
+    y_coordinate = IntegerField(validators=[InputRequired()])

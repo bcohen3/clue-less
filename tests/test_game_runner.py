@@ -137,3 +137,5 @@ class TestGameRunner(TestCase):
 
         new_current_player = self.game_runner.current_player
         self.assertEqual(2, new_current_player.id)
+
+    # TODO test move player

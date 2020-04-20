@@ -46,7 +46,7 @@ class GameRunner:
     def move_player(self, player_id, x_coordinate, y_coordinate):
         player = self.player_list[player_id]
         if self.validatePlayerMove() is True:
-            self.game_board_status.board[player.x_coordinate][player.y_coordinate] = 'b'
+            self.game_board_status.board[player.y_coordinate][player.x_coordinate] = 'b'
             player.update_coordinates(x_coordinate, y_coordinate)
             self.game_board_status.board[player.x_coordinate][player.y_coordinate] = player_id
 

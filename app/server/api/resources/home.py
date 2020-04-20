@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, redirect, url_for
 
 from app.server.domain.deck import Deck
 from app.server.domain.game_creator import GameCreator
@@ -24,16 +24,8 @@ def start_game():
 
     game_runner = GameRunner(created_game.deck, created_game.envelope, created_game.players,
                              created_game.weapons, created_game.game_board_status)
-    game_board = game_runner.game_board_status.board
 
-    move_form = MoveForm()
-    test_form = TestForm()
-
-    # TODO delete me
-    entered_move = 'my move'
-
-    return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move,
-                           game_board=game_board)
+    return redirect('/game-board')
 
 @blueprint.route('/game-board', methods=['GET', 'POST'])
 def game_board():
@@ -42,36 +34,19 @@ def game_board():
     entered_move = None
 
     if request.method == 'POST':
-        if 'move' in request.form:
-            entered_move = 'move'
-            move_form = MoveForm(request.form)
+        form = MoveForm(request.form)
+        if form.validate() is True:
+            player_id = form.data['player_id']
+            x_coordinate = form.data['x_coordinate']
+            y_coordinate = form.data['y_coordinate']
 
-        if 'test' in request.form:
-            entered_move = 'test'
-            test_form = TestForm(request.form)
+            game_runner.move_player(player_id, x_coordinate, y_coordinate)
+            game_runner.update_current_player()
 
-            # form = TestForm(request.form)
+    game_board = game_runner.game_board_status.board
 
-        # if form.validate() is not True:
-        #     print(form.errors)
-        #     return render_template('pages/game_board.html', form=form)
-        #
-        # entered_move = form.data['move']
-
-    return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move)
-
-
-@blueprint.route('/move-player', methods=['POST'])
-def move_player():
-    player_id = request.json['playerId']
-    x_coordinate = request.json['xCoordinate']
-    y_coordinate = request.json['yCoordinate']
-
-    game_runner.move_player(player_id, x_coordinate, y_coordinate)
-    game_runner.update_current_player()
-    game_board = game_runner.game_board_status
-
-    return render_template('pages/home.html', game_board=game_board)
+    return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move,
+                           game_board=game_board)
 
 
 @blueprint.route('/move-weapon', methods=['POST'])
