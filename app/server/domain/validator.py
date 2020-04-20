@@ -32,9 +32,6 @@ class Validator:
         self.currPositionx = currPositionx
         self.currPositiony = currPositiony
 
-        # temp set for other rooms: REMOVE WHEN NOT NEEDED
-        self.otherRooms = {"hall", "library", "billiard room", "dining room", "ballroom"}
-
 
     # checkRoomCoordRange(positionx, positiony)
     #
@@ -56,20 +53,20 @@ class Validator:
         roomResult = "false"
 
         # Study room
-        studyXCoords = set(range(0, 11, 1))
-        studyYCoords = set(range(11, 21, 1))
+        studyXCoords = set(range(1, 4, 1))
+        studyYCoords = set(range(9, 12, 1))
 
         # Lounge room
-        loungeXCoords = set(range(21, 31, 1))
-        loungeYCoords = set(range(31, 41, 1))
+        loungeXCoords = set(range(9, 12, 1))
+        loungeYCoords = set(range(9, 12, 1))
 
         # Kitchen room
-        kitchenXCoords = set(range(41, 51, 1))
-        kitchenYCoords = set(range(51, 61, 1))
+        kitchenXCoords = set(range(9, 12, 1))
+        kitchenYCoords = set(range(1, 4, 1))
 
         # Conservatory room
-        conservatoryXCoords = set(range(61, 71, 1))
-        conservatoryYCoords = set(range(71, 81, 1))
+        conservatoryXCoords = set(range(1, 3, 1))
+        conservatoryYCoords = set(range(1, 3, 1))
 
         # Set roomResult value based on the x and y coordinates
         if (positionx in studyXCoords) and (positiony in studyYCoords):
@@ -107,66 +104,66 @@ class Validator:
         hallwayResult = 0
 
         # Hallway A
-        hallAXCoords = set(range(0, 6, 1))
-        hallAYCoords = set(range(6, 11, 1))
+        hallAXCoords = 4
+        hallAYCoords = 10
 
         # Hallway B
-        hallBXCoords = set(range(11, 16, 1))
-        hallBYCoords = set(range(16, 21, 1))
+        hallBXCoords = 8
+        hallBYCoords = 10
 
         # Hallway C
-        hallCXCoords = set(range(21, 26, 1))
-        hallCYCoords = set(range(26, 31, 1))
+        hallCXCoords = 2
+        hallCYCoords = 8
 
         # Hallway D
-        hallDXCoords = set(range(31, 36, 1))
-        hallDYCoords = set(range(36, 41, 1))
+        hallDXCoords = 6
+        hallDYCoords = 8
 
         # Hallway E
-        hallEXCoords = set(range(41, 46, 1))
-        hallEYCoords = set(range(46, 51, 1))
+        hallEXCoords = 10
+        hallEYCoords = 8
 
         # Hallway F
-        hallFXCoords = set(range(51, 56, 1))
-        hallFYCoords = set(range(56, 61, 1))
+        hallFXCoords = 4
+        hallFYCoords = 6
 
         # Hallway G
-        hallGXCoords = set(range(61, 66, 1))
-        hallGYCoords = set(range(66, 71, 1))
+        hallGXCoords = 8
+        hallGYCoords = 6
 
         # Hallway H
-        hallHXCoords = set(range(71, 76, 1))
-        hallHYCoords = set(range(76, 81, 1))
+        hallHXCoords = 2
+        hallHYCoords = 4
 
         # Hallway I
-        hallIXCoords = set(range(81, 86, 1))
-        hallIYCoords = set(range(86, 91, 1))
+        hallIXCoords = 6
+        hallIYCoords = 2
 
         # Hallway J
-        hallJXCoords = set(range(91, 96, 1))
-        hallJYCoords = set(range(96, 101, 1))
+        hallJXCoords = 10
+        hallJYCoords = 2
 
         # Hallway K
-        hallKXCoords = set(range(101, 106, 1))
-        hallKYCoords = set(range(106, 111, 1))
+        hallKXCoords = 4
+        hallKYCoords = 2
 
         # Hallway L
-        hallLXCoords = set(range(111, 116, 1))
-        hallLYCoords = set(range(116, 121, 1))
+        hallLXCoords = 8
+        hallLYCoords = 2
 
         # Set hallwayResult value based on the x and y coordinates
-        if positionx in hallAXCoords and positiony in hallAYCoords or \
-                positionx in hallBXCoords and positiony in hallBYCoords or \
-                positionx in hallCXCoords and positiony in hallCYCoords or \
-                positionx in hallDXCoords and positiony in hallDYCoords or \
-                positionx in hallEXCoords and positiony in hallEYCoords or \
-                positionx in hallFXCoords and positiony in hallFYCoords or \
-                positionx in hallGXCoords and positiony in hallGYCoords or \
-                positionx in hallHXCoords and positiony in hallHYCoords or \
-                positionx in hallIXCoords and positiony in hallIYCoords or \
-                positionx in hallJXCoords and positiony in hallJYCoords or \
-                positionx in hallKXCoords and positiony in hallKYCoords or \
-                positionx in hallLXCoords and positiony in hallLYCoords:
+        if positionx == hallAXCoords and positiony == hallAYCoords or \
+                positionx == hallBXCoords and positiony == hallBYCoords or \
+                positionx == hallCXCoords and positiony == hallCYCoords or \
+                positionx == hallDXCoords and positiony == hallDYCoords or \
+                positionx == hallEXCoords and positiony == hallEYCoords or \
+                positionx == hallFXCoords and positiony == hallFYCoords or \
+                positionx == hallGXCoords and positiony == hallGYCoords or \
+                positionx == hallHXCoords and positiony == hallHYCoords or \
+                positionx == hallIXCoords and positiony == hallIYCoords or \
+                positionx == hallJXCoords and positiony == hallJYCoords or \
+                positionx == hallKXCoords and positiony == hallKYCoords or \
+                positionx == hallLXCoords and positiony == hallLYCoords:
             hallwayResult = 1
 
         #Set to false, not in hallway
