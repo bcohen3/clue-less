@@ -5,27 +5,37 @@ from app.server.domain.game_creator import GameCreator
 from app.server.domain.game_runner import GameRunner
 from app.server.domain.suggestion import Suggestion
 from app.server.forms.move_form import MoveForm
+from app.server.forms.test import TestForm
 
 blueprint = Blueprint('pages', __name__, template_folder='../../../client/templates')
 
 game_runner = None
 
 
-@blueprint.route('/', methods=['GET', 'POST'])
+@blueprint.route('/game-board', methods=['GET', 'POST'])
 def home():
-    form = MoveForm(request.form)
+    move_form = MoveForm(request.form)
+    test_form = TestForm(request.form)
     entered_move = None
 
     if request.method == 'POST':
-        print(form.data)
+        if 'move' in request.form:
+            entered_move = 'move'
+            move_form = MoveForm(request.form)
 
-        if form.validate() is not True:
-            print(form.errors)
-            return render_template('pages/home.html', form=form)
+        if 'test' in request.form:
+            entered_move = 'test'
+            test_form = TestForm(request.form)
 
-        entered_move = form.data['move']
+            # form = TestForm(request.form)
 
-    return render_template('pages/home.html', form=form, move=entered_move)
+        # if form.validate() is not True:
+        #     print(form.errors)
+        #     return render_template('pages/game_board.html', form=form)
+        #
+        # entered_move = form.data['move']
+
+    return render_template('pages/game_board.html', move_form=move_form, test_form=test_form, move=entered_move)
 
 
 @blueprint.route('/new-game', methods=['POST'])
@@ -38,7 +48,7 @@ def start_game():
                              created_game.weapons, created_game.game_board_status)
     game_board = game_runner.game_board_status
 
-    return render_template('pages/GameUI.html', game_board=game_board)
+    return render_template('pages/GameUI.html', form=form, game_board=game_board)
 
 
 @blueprint.route('/move-player', methods=['POST'])
