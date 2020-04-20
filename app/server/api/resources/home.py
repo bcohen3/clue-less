@@ -48,6 +48,7 @@ def move_player():
     y_coordinate = request.json['yCoordinate']
 
     game_runner.move_player(player_id, x_coordinate, y_coordinate)
+    game_runner.update_current_player()
     game_board = game_runner.game_board_status
 
     return render_template('pages/home.html', game_board=game_board)

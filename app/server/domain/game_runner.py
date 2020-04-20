@@ -1,7 +1,4 @@
-from app.server.domain.deck import Deck
-from app.server.domain.envelope import Envelope
-from app.server.domain.game_board import GameBoard
-from app.server.domain.player import Player
+from collections import namedtuple
 
 
 class GameRunner:
@@ -14,14 +11,35 @@ class GameRunner:
         self.game_board_status = game_board
 
     def check_suggestion(self, suggestion):
-        suggestion_cards = suggestion.get_card_ids()
+        suspect_id = suggestion.suspect_card.id
+        room_id = suggestion.room_card.id
 
+        # todo move accused player to room
+        # self.move_to_room(suspect_id, room_id)
+
+        suggestion_cards = suggestion.get_card_ids()
         for player in self.player_list:
             player_card_ids = player.get_card_ids()
             card_ids = [i for i in suggestion_cards if i in player_card_ids]
 
             if len(card_ids) > 0:
                 return self.deck.get_card_data_by_id(card_ids[0])
+
+        return None
+
+    def move_to_room(self, player_id, room_id):
+        # todo make sure this method is there
+        free_spot = self.find_free_spot_in_room(room_id)
+        x_coordinate = free_spot.x_coordinate
+        y_coordinate = free_spot.y_coordinate
+
+        self.move_player(player_id, x_coordinate, y_coordinate)
+
+    def find_free_spot_in_room(self, room_id):
+        # todo make this return named tuple
+        room = self.game_board_status.find_free_sport_in_room(room_id)
+        Location = namedtuple('location', 'x_coordinate y_coordinate')
+        return Location(room.x_coordinate, room.y_coordinate)
 
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
@@ -35,13 +53,13 @@ class GameRunner:
     def validatePlayerMove(self):
         return True
 
-    def move_player(self, palyer_id, x_coordinate, y_coordinate):
+    def move_player(self, player_id, x_coordinate, y_coordinate):
+        player = self.player_list[player_id]
         if self.validatePlayerMove() is True:
             # TODO make current position blank with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
-            self.current_player.x_coordinate = x_coordinate
-            self.current_player.y_coordinate = y_coordinate
+            player.x_coordinate = x_coordinate
+            player.y_coordinate = y_coordinate
             # TODO update current position with currentPlayerTurn.x_coordinate and currentPlayerTurn.y_coordinate
-            self.update_current_player()
 
     # TODO add move weapon validation
     def validate_weapon_move(self):

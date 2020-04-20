@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from app.server.domain.deck import Deck
 from app.server.domain.envelope import Envelope
+from app.server.domain.game_board import GameBoard
 from app.server.domain.game_piece import GamePiece
 from app.server.domain.game_runner import GameRunner
 from app.server.domain.player import Player
@@ -16,6 +17,7 @@ class TestGameRunner(TestCase):
     def setUpClass(cls):
         deck = Deck()
         envelope = Envelope()
+        game_board = GameBoard()
         player_zero = Player(0, 0, 0, [SuspectCard(0, 'Miss Scarlet')])
         player_one = Player(1, 1, 1, [WeaponCard(8, 'lead pipe')])
         player_two = Player(2, 2, 2, [RoomCard(19, 'library')])
@@ -24,7 +26,7 @@ class TestGameRunner(TestCase):
         weapon_two = GamePiece(4, 4, 4)
         weapon_three = GamePiece(5, 5, 5)
         weapon_list = [weapon_one, weapon_two, weapon_three]
-        cls.game_runner = GameRunner(deck, envelope, cls.player_list, weapon_list, 3)
+        cls.game_runner = GameRunner(deck, envelope, cls.player_list, weapon_list, game_board)
 
     def test_sets_the_first_player_as_the_current_player_when_game_starts(self):
         self.assertEqual(0, self.game_runner.current_player.id)
@@ -65,6 +67,10 @@ class TestGameRunner(TestCase):
 
         self.assertEqual(0, card_held_by_player.id)
 
+    # TODO finish this
+    # def test_moves_accused_player_to_accused_room(self):
+    #     self.fail()
+
     def test_ends_game_when_correct_accusation_made(self):
         suspect_card = SuspectCard(0, 'Miss Scarlet')
         weapon_card = WeaponCard(9, 'rope')
@@ -102,6 +108,10 @@ class TestGameRunner(TestCase):
     #     self.fail()
 
     # TODO check moves weapon correctly
+
+    # TODO test move to room
+
+    # TODO test find free spot in room
 
     def test_gets_weapon_by_id(self):
         weapon = self.game_runner.get_weapon_by_id(5)
