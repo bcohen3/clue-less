@@ -16,10 +16,9 @@ class GameRunner:
         suggestion_cards = suggestion.get_card_ids()
         for player in self.player_list:
             player_card_ids = player.get_card_ids()
-            card_ids = [i for i in suggestion_cards if i in player_card_ids]
-
-            if len(card_ids) > 0:
-                return self.deck.get_card_data_by_id(card_ids[0])
+            for i in range(0, 3):
+                if suggestion_cards[i] == player_card_ids[i]:
+                    return self.deck.get_card_data_by_id(player_card_ids[i])
 
         return None
 
@@ -48,7 +47,7 @@ class GameRunner:
         if self.validatePlayerMove() is True:
             self.game_board_status.board[player.y_coordinate][player.x_coordinate] = 'b'
             player.update_coordinates(x_coordinate, y_coordinate)
-            self.game_board_status.board[player.x_coordinate][player.y_coordinate] = player_id
+            self.game_board_status.board[player.y_coordinate][player.x_coordinate] = player_id
 
     # TODO add move weapon validation
     def validate_weapon_move(self):

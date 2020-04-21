@@ -38,11 +38,10 @@ def game_board():
     if request.method == 'POST':
         form = MoveForm(request.form)
         if form.validate() is True:
-            player_id = form.data['player_id']
             x_coordinate = form.data['x_coordinate']
             y_coordinate = form.data['y_coordinate']
 
-            game_runner.move_player(player_id, x_coordinate, y_coordinate)
+            game_runner.move_player(game_runner.current_player.id, x_coordinate, y_coordinate)
             game_runner.update_current_player()
 
         form = SuggestionForm(request.form)
