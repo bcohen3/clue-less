@@ -1,3 +1,6 @@
+from app.server.domain import validator
+from app.server.domain import player
+
 class GameRunner:
     def __init__(self, deck, envelope, player_list, weapon_list, game_board):
         self.deck = deck
@@ -40,7 +43,9 @@ class GameRunner:
 
     # TODO add move player validation
     def validatePlayerMove(self):
-        return True
+        checkMove = validator.Validator(self.current_player, self.current_player.x_coordinate, self.current_player.y_coordinate)
+        isValid = checkMove.validatePlayerMove(self.current_player, self.current_player.x_coordinate, self.current_player.y_coordinate, player.x_coordinate, player.y_coordinate, self.is_accusation,  self.game_board_status)
+        return isValid
 
     # TODO how will client send this data?
     def move_player(self, player_id, x_coordinate, y_coordinate):
