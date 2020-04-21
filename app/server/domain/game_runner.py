@@ -13,12 +13,13 @@ class GameRunner:
 
         self.move_to_room(suspect_id, room_id)
 
-        suggestion_cards = suggestion.get_card_ids()
+        suggestion_cards = set(suggestion.get_card_ids())
         for player in self.player_list:
             player_card_ids = player.get_card_ids()
-            for i in range(0, 3):
-                if suggestion_cards[i] == player_card_ids[i]:
-                    return self.deck.get_card_data_by_id(player_card_ids[i])
+            player_cars = set(player_card_ids)
+            shared = suggestion_cards & player_cars
+            if shared:
+                return self.deck.get_card_data_by_id(shared.pop())
 
         return None
 

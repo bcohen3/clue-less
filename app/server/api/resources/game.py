@@ -62,6 +62,7 @@ def game_board():
                     accusation_message = "Congratulations! Your accusation was correct. You won!"
                 else:
                     accusation_message = "Sorry, your accusation was incorrect. You lost."
+                    game_runner.update_current_player()
             else:
                 card_that_disproves_suggestion = game_runner.check_suggestion(suggestion)
                 if card_that_disproves_suggestion is None:
