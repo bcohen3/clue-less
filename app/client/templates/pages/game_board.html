@@ -44,7 +44,11 @@
     {% for row in game_board %}
         <tr>
         {% for position in row %}
-            <td>{{ position }}</td>
+            {% if position != 'x' %}
+                <td align="center">{{ position }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
         {% endfor %}
        </tr>
     {% endfor %}
