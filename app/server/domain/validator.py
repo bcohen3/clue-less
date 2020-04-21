@@ -241,6 +241,14 @@ class Validator:
                     isValidMove = 1
                 else:
                     isValidMove = 0
+                    
+            #CornerNextMoveType5: Validate next corner room move is a result of a Suggestion
+            else:
+                # If move is a result of a suggestion, valid move
+                if isSuggestion:
+                    isValidMove = 1
+                else:
+                    isValidMove = 0
 
         #Player is currently located in a hallway
         elif currentIsHallway:
