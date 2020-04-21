@@ -31,7 +31,10 @@ class Validator:
         self.PlayerID = PlayerID
         self.currPositionx = currPositionx
         self.currPositiony = currPositiony
-
+        
+        # temp set for other rooms: REMOVE WHEN NOT NEEDED
+        self.otherRooms = {"hall", "library", "billiard room", "dining room",
+                           "ballroom"}
 
     # checkRoomCoordRange(positionx, positiony)
     #
