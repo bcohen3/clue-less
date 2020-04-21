@@ -25,10 +25,6 @@
 </div>
 
 <div>
-    <p class="lead">It's your turn, player {{current_player}}</p>
-</div>
-
-<div>
     {% if suggestion_message %}
        <p class="lead">{{suggestion_message}}</p>
     {% endif %}
@@ -38,6 +34,10 @@
     {% if accusation_message is not none %}
        <p class="lead">{{accusation_message}}</p>
     {% endif %}
+</div>
+
+<div>
+    <p class="lead">It's your turn, player {{current_player}}</p>
 </div>
 
 <table class="table table-striped">
