@@ -18,9 +18,10 @@ class TestGameRunner(TestCase):
         deck = Deck()
         envelope = Envelope()
         game_board = GameBoard()
-        player_zero = Player(0, 0, 0, [SuspectCard(0, 'Miss Scarlet')])
-        player_one = Player(1, 1, 1, [WeaponCard(8, 'lead pipe')])
-        player_two = Player(2, 2, 2, [RoomCard(19, 'library')])
+        cards = [SuspectCard(0, 'Miss Scarlet'), WeaponCard(8, 'lead pipe'), RoomCard(19, 'library')]
+        player_zero = Player(0, 0, 0, cards)
+        player_one = Player(1, 1, 1, cards)
+        player_two = Player(2, 2, 2, cards)
         cls.player_list = [player_zero, player_one, player_two]
         weapon_one = GamePiece(3, 3, 3)
         weapon_two = GamePiece(4, 4, 4)
