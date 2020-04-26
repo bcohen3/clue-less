@@ -79,7 +79,7 @@ class GameRunner:
         curr_player = self.player_list[player_id]
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player)
 
-        # Validate whether move and if valid, move player
+        # Validate move and if valid, move player
         (isValidMove, validation_message) = self.validatePlayerMove(curr_player, x_coordinate, y_coordinate)
 
         if isValidMove:
