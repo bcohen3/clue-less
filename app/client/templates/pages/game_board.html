@@ -25,6 +25,12 @@
 </div>
 
 <div>
+    {% if move_player_message %}
+       <p class="lead">{{move_player_message}}</p>
+    {% endif %}
+</div>
+
+<div>
     {% if suggestion_message %}
        <p class="lead">{{suggestion_message}}</p>
     {% endif %}
