@@ -14,7 +14,12 @@ class GameCreator:
         self.envelope = Envelope()
         self.game_board_status = GameBoard()
         Point = namedtuple('Point', 'x_coordinate y_coordinate')
-        self.player_starting_indices = [Point(7, 1), Point(7, 9), Point(1, 7), Point(9, 3), Point(1, 3), Point(3, 9)]
+        #self.player_starting_indices = [Point(7, 1), Point(7, 9), Point(1, 7), Point(9, 3), Point(1, 3), Point(3, 9)]
+
+        #PABD
+        #Mrs White; Mr. Green; Mrs. Peacock; Professor Plum; Miss Scarlet; Colonel Mustard
+        self.player_starting_indices = [Point(8, 12), Point(4, 12), Point(0, 8),
+                                        Point(0, 4), Point(8, 0), Point(12, 4)]
 
         self.deck.shuffle()
         self.select_cards_for_envelope()

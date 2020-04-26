@@ -1,3 +1,6 @@
+from app.server.domain import validator
+from app.server.domain import player
+
 class GameRunner:
     def __init__(self, deck, envelope, player_list, weapon_list, game_board):
         self.deck = deck
@@ -38,17 +41,60 @@ class GameRunner:
 
         return self.current_player.is_winner
 
-    # TODO add move player validation
-    def validatePlayerMove(self):
-        return True
+    # validatePlayerMove(self, player_id, x_coordinate, y_coordinate):
+    #
+    # This method accepts three parameters and validates the player's next move.
+    #
+    # @param player_id integer representing the Player's unique ID
+    # @param x_coordinate integer representing the Player's next position, x coordinate
+    # @param y_coordinate integer representing the Player's next position, y coordinate
+    #
+    # postcondition: The method validates the player's next move. If the move
+    #                 is valid, it returns True. If the move is invalid,
+    #                 it returns False.
+    #
+    def validatePlayerMove(self, player_id, x_coordinate, y_coordinate):
+        curr_player_id = player_id
+        (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
 
-    # TODO how will client send this data?
+        checkMove = validator.Validator(curr_player_id, x_coordinate, y_coordinate)
+        isValid = checkMove.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, False,  self.game_board_status)
+        return isValid
+
+    # move_player(self, player_id, x_coordinate, y_coordinate):
+    #
+    # This method accepts three parameters and moves the player to the next location, if valid.
+    #
+    # @param player_id integer representing the Player's unique ID
+    # @param x_coordinate integer representing the Player's next position, x coordinate
+    # @param y_coordinate integer representing the Player's next position, y coordinate
+    #
+    # postcondition: The method moves the player to the next location if valid. If the move
+    #                 is valid. If move was successful, it returns True. If the move is invalid,
+    #                 it returns False.
+    #
     def move_player(self, player_id, x_coordinate, y_coordinate):
-        player = self.player_list[player_id]
-        if self.validatePlayerMove() is True:
-            self.game_board_status.board[player.y_coordinate][player.x_coordinate] = 'b'
-            player.update_coordinates(x_coordinate, y_coordinate)
-            self.game_board_status.board[player.y_coordinate][player.x_coordinate] = player_id
+        isValidMove = False
+        validation_message = None
+        curr_player = self.player_list[player_id]
+        (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player)
+
+        # Validate whether move and if valid, move player
+        (isValidMove, validation_message) = self.validatePlayerMove(curr_player, x_coordinate, y_coordinate)
+
+        if isValidMove:
+            # set previous space to blank
+            self.game_board_status.board[curr_player_y][curr_player_x] = 'b'
+
+            #update current player's location to new coordinates
+            player.Player.update_coordinates(self, x_coordinate, y_coordinate)
+
+            #update new location to curent player
+            self.game_board_status.board[y_coordinate][x_coordinate] = player_id
+
+            return True, validation_message
+        else:
+            return False, validation_message
 
     # TODO add move weapon validation
     def validate_weapon_move(self):
