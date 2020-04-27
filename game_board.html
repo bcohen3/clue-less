@@ -1,0 +1,95 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 
+ <script>
+  $("#search_form_input").keyup(function(){
+      var text = $(this).val();
+
+      $.ajax({
+        url: "/game",
+        type: "post",
+        data: {jsdata: text},
+        success: function(response) {
+          $("#move").html(response);
+        }
+      });
+  });
+  </script>
+
+</head>
+
+<div class="page-header">
+  <h1>The Classic Mystery Game</h1>
+</div>
+
+<div>
+    <p class="lead">It's your turn, player {{current_player}}</p>
+</div>
+
+<div>
+    {% if suggestion_message %}
+       <p class="lead">{{suggestion_message}}</p>
+    {% endif %}
+</div>
+
+<div>
+    {% if accusation_message is not none %}
+       <p class="lead">{{accusation_message}}</p>
+    {% endif %}
+</div>
+
+<table class="table table-striped">
+    {% for row in game_board %}
+        <tr>
+        {% for position in row %}
+            <td>{{ position }}</td>
+        {% endfor %}
+       </tr>
+    {% endfor %}
+</table>
+
+<form method="post" class="move_form form-reset">
+    <h3 class="form-heading">Move Player</h3>
+    <table width="100%">
+    <th>Select Player</th>
+    <th>Select Room </th>
+    <tr>
+    <td>{{ move_form.player_id}}</td>
+    <td>{{ move_form.r_Select}}</td>
+    <!--<td>{{ move_form.y_coordinate}}</td>-->
+    </tr>
+    </table>
+    <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+    {{ move_form.hidden_tag() }}
+</form>
+
+<form method="post" class="suggestion_form form-reset">
+    <h3 class="form-heading">Make a Suggestion about who committed the murder</h3>
+   	<table width="100%">
+   	<th>Select Character</th>
+   	<th>Select Weapon</th>
+   	<th>Select Room</th>
+   	<tr>
+    <td>{{ suggestion_form.character_id}}</td>
+    <td>{{ suggestion_form.weapon_id }}</td>
+    <td>{{ suggestion_form.room_id}}</td>
+	</tr>
+	</table>
+    <h5>Make an Accusation</h5>
+    {{ suggestion_form.is_accusation}}
+
+    {% if suggestion_message %}
+        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block" disabled>
+
+    {% else %}
+        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+    {% endif %}
+
+    {{ suggestion_form.hidden_tag() }}
+</form>
+
+{% endblock %}
