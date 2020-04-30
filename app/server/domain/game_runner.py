@@ -41,49 +41,51 @@ class GameRunner:
 
         return self.current_player.is_winner
 
-    # validatePlayerMove(self, player_id, x_coordinate, y_coordinate):
+    # validatePlayerMove(self, player_id, x_coordinate, y_coordinate, isSuggestion):
     #
     # This method accepts three parameters and validates the player's next move.
     #
     # @param player_id integer representing the Player's unique ID
     # @param x_coordinate integer representing the Player's next position, x coordinate
     # @param y_coordinate integer representing the Player's next position, y coordinate
+    # @param isSuggestion boolean representing the whether the move request is a result of a suggestion
     #
     # postcondition: The method validates the player's next move. If the move
     #                 is valid, it returns True. If the move is invalid,
     #                 it returns False.
     #
-    def validatePlayerMove(self, player_id, x_coordinate, y_coordinate):
+    def validatePlayerMove(self, player_id, x_coordinate, y_coordinate, isSuggestion):
         curr_player_id = player_id
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
 
         checkMove = validator.Validator(curr_player_id, x_coordinate, y_coordinate)
-        isValid = checkMove.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, False,  self.game_board_status)
+        isValid = checkMove.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, isSuggestion,  self.game_board_status)
         return isValid
 
-    # move_player(self, player_id, x_coordinate, y_coordinate):
+    # move_player(self, player_id, x_coordinate, y_coordinate, isSuggestion):
     #
-    # This method accepts three parameters and moves the player to the next location, if valid.
+    # This method accepts four parameters and moves the player to the next location, if valid.
     #
     # @param player_id integer representing the Player's unique ID
     # @param x_coordinate integer representing the Player's next position, x coordinate
     # @param y_coordinate integer representing the Player's next position, y coordinate
+    # @param isSuggestion boolean representing the whether the move request is a result of a suggestion
     #
     # postcondition: The method moves the player to the next location if valid. If the move
     #                 is valid. If move was successful, it returns True. If the move is invalid,
     #                 it returns False.
     #
-    def move_player(self, player_id, x_coordinate, y_coordinate):
+    def move_player(self, player_id, x_coordinate, y_coordinate, isSuggestion):
         isValidMove = False
         validation_message = None
         curr_player = self.player_list[player_id]
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player)
 
         # Validate move and if valid, move player
-        (isValidMove, validation_message) = self.validatePlayerMove(curr_player, x_coordinate, y_coordinate)
+        (isValidMove, validation_message) = self.validatePlayerMove(curr_player, x_coordinate, y_coordinate, isSuggestion)
 
         if isValidMove:
-            # set previous space to blank
+            #set previous space to blank
             self.game_board_status.board[curr_player_y][curr_player_x] = 'b'
 
             #update current player's location to new coordinates
@@ -93,6 +95,7 @@ class GameRunner:
             self.game_board_status.board[y_coordinate][x_coordinate] = player_id
 
             return True, validation_message
+
         else:
             return False, validation_message
 
@@ -117,7 +120,18 @@ class GameRunner:
         current_player_id = self.current_player.id
         next_player_id = current_player_id + 1
 
-        while self.player_list[next_player_id].is_loser is True:
-            next_player_id += 1
+        #If next player count does not exceed total number of elements in list
+        if next_player_id <= len(self.player_list) - 1:
+            while self.player_list[next_player_id].is_loser is True:
+                next_player_id += 1
 
-        self.current_player = self.player_list[next_player_id]
+            self.current_player = self.player_list[next_player_id]
+
+        #Else, reset and find next player
+        else:
+            next_player_id = 0
+            while self.player_list[next_player_id].is_loser is True:
+                next_player_id += 1
+
+            self.current_player = self.player_list[next_player_id]
+

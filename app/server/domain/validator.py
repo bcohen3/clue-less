@@ -27,264 +27,90 @@ class Validator:
         self.currPositiony = currPositiony
 
         # BEGIN: Create room, hallways and home attributes
-        #Corner Room dictionary
+        # Build game board corner rooms dictionary
         self.gameBoardCornerRoom = {
-            "study": {"id": 18, "name": "study", "isCornerRoom": 1, "type": "room",
-                    "x_index": set(range(1, 4, 1)), "y_index": set(range(1, 4, 1))},
-            "lounge": {"id": 16, "name": "lounge", "isCornerRoom": 1, "type": "room",
-                    "x_index": set(range(9, 12, 1)), "y_index": set(range(1, 4, 1))},
-            "conservatory": {"id": 14, "name": "conservatory", "isCornerRoom": 1, "type": "room",
-                    "x_index": set(range(1, 4, 1)), "y_index": set(range(9, 12, 1))},
-            "kitchen": {"id": 12, "name": "kitchen", "isCornerRoom": 1, "type": "room",
-                    "x_index": set(range(9, 12, 1)), "y_index": set(range(9, 12, 1))}
+            4: {"id": 18, "name": "study", "isCornerRoom": 1,
+                "type": "room", "adjacentHall": ('A', 'C'),
+                "xIndex": set(range(1, 4, 1)),
+                "yIndex": set(range(1, 4, 1))},
+            5: {"id": 16, "name": "lounge", "isCornerRoom": 1,
+                "type": "room", "adjacentHall": ('B', 'E'),
+                "xIndex": set(range(9, 12, 1)),
+                "yIndex": set(range(1, 4, 1))},
+            6: {"id": 14, "name": "conservatory", "isCornerRoom": 1,
+                "type": "room", "adjacentHall": ('H', 'K'),
+                "xIndex": set(range(1, 4, 1)),
+                "yIndex": set(range(9, 12, 1))},
+            7: {"id": 12, "name": "kitchen", "isCornerRoom": 1,
+                "type": "room", "adjacentHall": ('J', 'L'),
+                "xIndex": set(range(9, 12, 1)),
+                "yIndex": set(range(9, 12, 1))}
         }
 
-        #Non-Corner Room dictionary
+        # Build game board non-corner rooms dictionary
         self.gameBoardOtherRoom = {
             0: {"id": 17, "name": "hall", "isCornerRoom": 0, "type": "room",
-                    "x_index": set(range(5, 8, 1)), "y_index": set(range(1, 4, 1)), "adjacent_hall": ('A', 'B', 'D')},
+                    "adjacentHall": ('A', 'B', 'D'),
+                    "xIndex": set(range(5, 8, 1)), "yIndex": set(range(1, 4, 1))},
             1: {"id": 19, "name": "library", "isCornerRoom": 0, "type": "room",
-                    "x_index": set(range(1, 4, 1)), "y_index": set(range(5, 8, 1)), "adjacent_hall": ('C', 'F', 'H')},
+                    "adjacentHall": ('C', 'F', 'H'),
+                    "xIndex": set(range(1, 4, 1)), "yIndex": set(range(5, 8, 1))},
             2: {"id": 20, "name": "billiard room", "isCornerRoom": 0, "type": "room",
-                    "x_index": set(range(5, 8, 1)), "y_index": set(range(5, 8, 1)), "adjacent_hall": ('D', 'F', 'I', 'G')},
+                    "adjacentHall": ('D', 'F', 'I', 'G'),
+                    "xIndex": set(range(5, 8, 1)), "yIndex": set(range(5, 8, 1))},
             3: {"id": 13, "name": "ball room", "isCornerRoom": 0, "type": "room",
-                    "x_index": set(range(5, 8, 1)), "y_index": set(range(9, 12, 1)), "adjacent_hall": ('K', 'I', 'L')}
+                    "adjacentHall": ('K', 'I', 'L'),
+                    "xIndex": set(range(5, 8, 1)), "yIndex": set(range(9, 12, 1))}
         }
 
-        # build hallway dictionaries
-        self.hallwayADict = {
-            "id": 21,
-            "name": "hallway a",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 4,
-            "y_index": 2,
-            "adjacent_room_a": "study",
-            "adjacent_room_b": "hall"
-        }
-        self.hallwayBDict = {
-            "id": 22,
-            "name": "hallway b",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 8,
-            "y_index": 2,
-            "adjacent_room_a": "hall",
-            "adjacent_room_b": "lounge"
-        }
-        self.hallwayCDict = {
-            "id": 23,
-            "name": "hallway c",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 2,
-            "y_index": 4,
-            "adjacent_room_a": "study",
-            "adjacent_room_b": "library"
-        }
-        self.hallwayDDict = {
-            "id": 25,
-            "name": "hallway d",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 6,
-            "y_index": 4,
-            "adjacent_room_a": "hall",
-            "adjacent_room_b": "billiard room"
-        }
-        self.hallwayEDict = {
-            "id": 27,
-            "name": "hallway e",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 10,
-            "y_index": 4,
-            "adjacent_room_a": "lounge",
-            "adjacent_room_b": "dining room"
-        }
-        self.hallwayFDict = {
-            "id": 24,
-            "name": "hallway f",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 4,
-            "y_index": 6,
-            "adjacent_room_a": "library",
-            "adjacent_room_b": "billiard room"
-        }
-        self.hallwayGDict = {
-            "id": 26,
-            "name": "hallway g",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 8,
-            "y_index": 6,
-            "adjacent_room_a": "billiard room",
-            "adjacent_room_b": "dining room"
-        }
-        self.hallwayHDict = {
-            "id": 28,
-            "name": "hallway h",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 2,
-            "y_index": 8,
-            "adjacent_room_a": "library",
-            "adjacent_room_b": "conservatory"
-        }
-        self.hallwayIDict = {
-            "id": 29,
-            "name": "hall i",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 6,
-            "y_index": 8,
-            "adjacent_room_a": "billiard room",
-            "adjacent_room_b": "ball room"
-        }
-        self.hallwayJDict = {
-            "id": 30,
-            "name": "hallway j",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 10,
-            "y_index": 8,
-            "adjacent_room_a": "dining room",
-            "adjacent_room_b": "kitchen"
-        }
-        self.hallwayKDict = {
-            "id": 31,
-            "name": "hallway k",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 4,
-            "y_index": 10,
-            "adjacent_room_a": "conservatory",
-            "adjacent_room_b": "ball room"
-        }
-        self.hallwayLDict = {
-            "id": 32,
-            "name": "hallway l",
-            "isCornerRoom": 0,
-            "type": "hallway",
-            "x_index": 8,
-            "y_index": 10,
-            "adjacent_room_a": "ball room",
-            "adjacent_room_b": "kitchen"
-        }
+        # Build game board hallways dictionary
         self.gameBoardHallwaysDict = {
-           21: {"id": "A", "name": "hallway a", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 4, "y_index": 2, "adjacent_room_a": "study", "adjacent_room_b": "hall"},
-           22: {"id": "B", "name": "hallway b", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 8, "y_index": 2, "adjacent_room_a": "hall", "adjacent_room_b": "lounge"},
-           23: {"id": "C", "name": "hallway c", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 2, "y_index": 4, "adjacent_room_a": "study", "adjacent_room_b": "library"},
-           25: {"id": "D", "name": "hallway d", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 6, "y_index": 4, "adjacent_room_a": "hall", "adjacent_room_b": "billiard room"},
-           27: {"id": "E", "name": "hallway e", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 10, "y_index": 4, "adjacent_room_a": "lounge", "adjacent_room_b": "dining room"},
-           24: {"id": "F", "name": "hallway f", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 4, "y_index": 6, "adjacent_room_a": "library", "adjacent_room_b": "billiard room"},
-           26: {"id": "G", "name": "hallway g", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 8, "y_index": 6, "adjacent_room_a": "billiard room", "adjacent_room_b": "dining room"},
-           28: {"id": "H", "name": "hallway h", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 2, "y_index": 8, "adjacent_room_a": "library", "adjacent_room_b": "conservatory"},
-           29: {"id": "I", "name": "hall i", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 6, "y_index": 8, "adjacent_room_a": "billiard room", "adjacent_room_b": "ball room"},
-           30: {"id": "J", "name": "hallway j", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 10, "y_index": 8, "adjacent_room_a": "dining room", "adjacent_room_b": "kitchen"},
-           31: {"id": "K", "name": "hallway k", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 4, "y_index": 10, "adjacent_room_a": "conservatory", "adjacent_room_b": "ball room"},
-           32: {"id": "L", "name": "hallway l", "isCornerRoom": 0, "type": "hallway",
-                    "x_index": 8, "y_index": 10, "adjacent_room_a": "ball room", "adjacent_room_b": "kitchen"}
+           21: {"id": "21", "name": "A", "fullName": "hallway a", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 4, "yIndex": 2, "adjacentRoomA": "study", "adjacentRoomB": "hall"},
+           22: {"id": "22","name": "B", "fullName": "hallway b", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 8, "yIndex": 2, "adjacentRoomA": "hall", "adjacentRoomB": "lounge"},
+           23: {"id": "23", "name": "C", "fullName": "hallway c", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 2, "yIndex": 4, "adjacentRoomA": "study", "adjacentRoomB": "library"},
+           25: {"id": "25", "name": "D", "fullName": "hallway d", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 6, "yIndex": 4, "adjacentRoomA": "hall", "adjacentRoomB": "billiard room"},
+           27: {"id": "27", "name": "E", "fullName": "hallway e", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 10, "yIndex": 4, "adjacentRoomA": "lounge", "adjacentRoomB": "dining room"},
+           24: {"id": "24", "name": "F", "fullName": "hallway f", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 4, "yIndex": 6, "adjacentRoomA": "library", "adjacentRoomB": "billiard room"},
+           26: {"id": "26", "name": "G", "fullName": "hallway g", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 8, "yIndex": 6, "adjacentRoomA": "billiard room", "adjacentRoomB": "dining room"},
+           28: {"id": "28", "name": "H", "fullName": "hallway h", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 2, "yIndex": 8, "adjacentRoomA": "library", "adjacentRoomB": "conservatory"},
+           29: {"id": "29", "name": "I", "fullName": "hall i", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 6, "yIndex": 8, "adjacentRoomA": "billiard room", "adjacentRoomB": "ball room"},
+           30: {"id": "30", "name": "J", "fullName": "hallway j", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 10, "yIndex": 8, "adjacentRoomA": "dining room", "adjacentRoomB": "kitchen"},
+           31: {"id": "31", "name": "K", "fullName": "hallway k", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 4, "yIndex": 10, "adjacentRoomA": "conservatory", "adjacentRoomB": "ball room"},
+           32: {"id": "32", "name": "L", "fullName": "hallway l", "isCornerRoom": 0, "type": "hallway",
+                    "xIndex": 8, "yIndex": 10, "adjacentRoomA": "ball room", "adjacentRoomB": "kitchen"}
         }
 
-        # build home space dictionaries
-        self.mrsWhiteHomeSpaceDict = {
-            "id": 1,
-            "name": "Mrs. White",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 8,
-            "y_index": 12,
-            "hallway": 'L',
-            "adjacent_room_a": "ball room",
-            "adjacent_room_b": "kitchen"
-        }
-        self.mrsGreenHomeSpaceDict = {
-            "id": 5,
-            "name": "Mr. Green",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 4,
-            "y_index": 12,
-            "hallway": 'K',
-            "adjacent_room_a": "conservatory",
-            "adjacent_room_b": "ball room"
-        }
-        self.mrsPeacockHomeSpaceDict = {
-            "id": 2,
-            "name": "Mrs. Peacock",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 0,
-            "y_index": 8,
-            "hallway": 'H',
-            "adjacent_room_a": "library",
-            "adjacent_room_b": "conservatory"
-        }
-        self.profPlumHomeSpaceDict = {
-            "id": 4,
-            "name": "Professor Plum",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 0,
-            "y_index": 4,
-            "hallway": 'C',
-            "adjacent_room_a": "study",
-            "adjacent_room_b": "library"
-        }
-        self.missScarlettHomeSpaceDict = {
-            "id": 0,
-            "name": "Miss Scarlet",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 8,
-            "y_index": 0,
-            "hallway": 'B',
-            "adjacent_room_a": "hall",
-            "adjacent_room_b": "lounge"
-        }
-        self.colMustardHomeSpaceDict = {
-            "id": 3,
-            "name": "Colonel Mustard",
-            "isCornerRoom": 0,
-            "type": "home space",
-            "x_index": 12,
-            "y_index": 4,
-            "hallway": 'E',
-            "adjacent_room_a": "lounge",
-            "adjacent_room_b": "dining room"
-        }
+        #Build game board players dictionary
         self.gameBoardPlayersDict = {
             0: {"id": 0, "name": "Miss Scarlet", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 8, "y_index": 0, "hallway": 'B', "adjacent_room_a": "hall",
-                    "adjacent_room_b": "lounge"},
+                    "hallway": "B", "adjacentRoomA": "hall", "adjacentRoomB": "lounge",
+                    "xIndex": 8, "yIndex": 0},
             1: {"id": 1, "name": "Mrs. White", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 8, "y_index": 12, "hallway": 'L', "adjacent_room_a": "ball room",
-                    "adjacent_room_b": "kitchen"},
+                    "hallway": "L", "adjacentRoomA": "ball room", "adjacentRoomB": "kitchen",
+                    "xIndex": 8, "yIndex": 12},
             2: {"id": 2, "name": "Mrs. Peacock", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 0, "y_index": 8, "hallway": 'H', "adjacent_room_a": "library",
-                    "adjacent_room_b": "conservatory"},
+                    "hallway": "H", "adjacentRoomA": "library", "adjacentRoomB": "conservatory",
+                    "xIndex": 0, "yIndex": 8},
             3: {"id": 3, "name": "Colonel Mustard", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 12, "y_index": 4, "hallway": 'E', "adjacent_room_a": "lounge",
-                    "adjacent_room_b": "dining room",},
+                    "hallway": "E", "adjacentRoomA": "lounge", "adjacentRoomB": "dining room",
+                    "xIndex": 12, "yIndex": 4},
             4: {"id": 4, "name": "Professor Plum", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 0, "y_index": 4, "hallway": 'C', "adjacent_room_a": "study",
-                    "adjacent_room_b": "library"},
+                    "hallway": "C", "adjacentRoomA": "study", "adjacentRoomB": "library",
+                    "xIndex": 0, "yIndex": 4},
             5: {"id": 5, "name": "Mr. Green", "isCornerRoom": 0, "type": "home space",
-                    "x_index": 4, "y_index": 12, "hallway": 'K', "adjacent_room_a": "conservatory",
-                    "adjacent_room_b": "ball room"}
+                     "hallway": "K", "adjacentRoomA": "conservatory", "adjacentRoomB": "ball room",
+                     "xIndex": 4, "yIndex": 12}
         }
 
         #non-corner rooms list
@@ -292,7 +118,6 @@ class Validator:
                             self.gameBoardOtherRoom[1]['name'],
                             self.gameBoardOtherRoom[2]['name'],
                             self.gameBoardOtherRoom[3]['name']}
-
 
     # checkRoomCoordRange(positionx, positiony)
     #
@@ -302,25 +127,22 @@ class Validator:
     # @param positiony integer representing the y coordinate of the position
     #
     # postcondition: The method checks whether the coordinates are a corner room. If so,
-    #                it returns the room name. If not, it returns false.
+    #                it returns the room id and name. If not, it returns -1 and false.
     #
     def checkRoomCoordRange(self, positionx, positiony):
-        roomResult = False
+        roomCornerResultID = -1
+        roomCornerResultName = False
 
-        # Set roomResult value based on the x and y coordinates
-        if positionx in self.gameBoardCornerRoom['study']['x_index'] and positiony in self.gameBoardCornerRoom['study']['y_index']:
-            roomResult = self.gameBoardCornerRoom['study']['name']
-        elif positionx in self.gameBoardCornerRoom['lounge']['x_index'] and positiony in self.gameBoardCornerRoom['lounge']['y_index']:
-            roomResult = self.gameBoardCornerRoom['lounge']['name']
-        elif positionx in self.gameBoardCornerRoom['kitchen']['x_index'] and positiony in self.gameBoardCornerRoom['kitchen']['y_index']:
-            roomResult = self.gameBoardCornerRoom['kitchen']['name']
-        elif positionx in self.gameBoardCornerRoom['conservatory']['x_index'] and positiony in self.gameBoardCornerRoom['conservatory']['y_index']:
-            roomResult = self.gameBoardCornerRoom['conservatory']['name']
-        else:
-            roomResult = False
+        # Set room result values according to the x and y coordinates
+        for i in range(4, 8, 1):
+            if self.gameBoardCornerRoom[i]['xIndex'] == positionx and \
+                    self.gameBoardCornerRoom[i]['yIndex'] == positiony:
+                roomCornerResultID = self.gameBoardCornerRoom[i]['id']
+                roomCornerResultName = self.gameBoardCornerRoom[i]['name']
+                break
 
-        # return result
-        return roomResult
+        # return results
+        return roomCornerResultID, roomCornerResultName
 
     # checkHomeSpaceCoordRange(positionx, positiony)
     #
@@ -330,29 +152,22 @@ class Validator:
     # @param positiony integer representing the y coordinate of the position
     #
     # postcondition: The method checks whether the coordinates are a character's home space. If so,
-    #                it returns the character's name. If not, it returns false.
+    #                it returns the character's id and name. If not, it returns -1 and false.
     #
     def checkHomeSpaceCoordRange(self, positionx, positiony):
-        homeSpaceResult = False
+        homeSpaceResultID = -1
+        homeSpaceResultName = False
 
-        # Set homeSpaceResult value based on the x and y coordinates
-        if (positionx == self.mrsWhiteHomeSpaceDict['x_index']) and (positiony == self.mrsWhiteHomeSpaceDict['y_index']):
-            homeSpaceResult = self.mrsWhiteHomeSpaceDict['id']
-        elif (positionx == self.mrsGreenHomeSpaceDict['x_index']) and (positiony == self.mrsGreenHomeSpaceDict['y_index']):
-            homeSpaceResult = self.mrsGreenHomeSpaceDict['id']
-        elif (positionx == self.mrsPeacockHomeSpaceDict['x_index']) and (positiony == self.mrsPeacockHomeSpaceDict['y_index']):
-            homeSpaceResult = self.mrsPeacockHomeSpaceDict['id']
-        elif (positionx == self.profPlumHomeSpaceDict['x_index']) and (positiony == self.profPlumHomeSpaceDict['y_index']):
-            homeSpaceResult = self.profPlumHomeSpaceDict['id']
-        elif (positionx == self.missScarlettHomeSpaceDict['x_index']) and (positiony == self.missScarlettHomeSpaceDict['y_index']):
-            homeSpaceResult = self.missScarlettHomeSpaceDict['id']
-        elif (positionx == self.colMustardHomeSpaceDict['x_index']) and (positiony == self.colMustardHomeSpaceDict['y_index']):
-            homeSpaceResult = self.colMustardHomeSpaceDict['id']
-        else:
-            homeSpaceResult = False
+        # Set home space result values according to the x and y coordinates
+        for i in range(0, 6, 1):
+            if self.gameBoardPlayersDict[i]['xIndex'] == positionx and \
+                    self.gameBoardPlayersDict[i]['yIndex'] == positiony:
+                homeSpaceResultID = self.gameBoardPlayersDict[i]['id']
+                homeSpaceResultName = self.gameBoardPlayersDict[i]['name']
+                break
 
-        # return result
-        return homeSpaceResult
+        # return results
+        return homeSpaceResultID, homeSpaceResultName
 
     # checkHallwayCoordRange(positionx, positiony)
     #
@@ -362,42 +177,23 @@ class Validator:
     # @param positiony integer representing the y coordinate of the position
     #
     # postcondition: The method checks whether the coordinates are a hallway. If so,
-    #                it returns True. If not, it returns False.
+    #                it returns the hallway's ID and name . If not, it returns -1 and False.
     #
     def checkHallwayCoordRange(self, positionx, positiony):
-        hallwayID = None
-        hallwayResult = 0
+        hallwayResultID = -1
+        hallwayResultName = False
 
 
-        # Set hallwayResult value based on the x and y coordinates
-        if positionx == self.hallwayADict['x_index'] and positiony == self.hallwayADict['y_index'] or \
-                positionx == self.hallwayBDict['x_index'] and positiony == self.hallwayBDict['y_index'] or \
-                positionx == self.hallwayCDict['x_index'] and positiony == self.hallwayCDict['y_index'] or \
-                positionx == self.hallwayDDict['x_index'] and positiony == self.hallwayDDict['y_index'] or \
-                positionx == self.hallwayEDict['x_index'] and positiony == self.hallwayEDict['y_index'] or \
-                positionx == self.hallwayFDict['x_index'] and positiony == self.hallwayFDict['y_index'] or \
-                positionx == self.hallwayGDict['x_index'] and positiony == self.hallwayGDict['y_index'] or \
-                positionx == self.hallwayHDict['x_index'] and positiony == self.hallwayHDict['y_index'] or \
-                positionx == self.hallwayIDict['x_index'] and positiony == self.hallwayIDict['y_index'] or \
-                positionx == self.hallwayJDict['x_index'] and positiony == self.hallwayJDict['y_index'] or \
-                positionx == self.hallwayKDict['x_index'] and positiony == self.hallwayKDict['y_index'] or \
-                positionx == self.hallwayLDict['x_index'] and positiony == self.hallwayLDict['y_index']:
-
-            #determine which hallway
-            for j in range(21, 33, 1):
-                if self.gameBoardHallwaysDict[j]["x_index"] == positionx and \
-                   self.gameBoardHallwaysDict[j]["y_index"] == positiony:
-                    hallwayID = self.gameBoardHallwaysDict[j]["id"]
-                    break
-
-            hallwayResult = True
-
-        #Set to false, not in hallway
-        else:
-            hallwayResult = False
+        # Set hallway result values according to the x and y coordinates
+        for j in range(21, 33, 1):
+            if self.gameBoardHallwaysDict[j]['xIndex'] == positionx and \
+                   self.gameBoardHallwaysDict[j]['yIndex'] == positiony:
+                hallwayResultID = self.gameBoardHallwaysDict[j]['id']
+                hallwayResultName = self.gameBoardHallwaysDict[j]['name']
+                break
 
         #return results
-        return hallwayResult, hallwayID
+        return hallwayResultID, hallwayResultName
 
     # validatePlayerMove(PlayerID, currPositionx, currPositiony, nextCoordx, nextCoordy, isSuggestion, GameBoardStatus)
     #
@@ -415,7 +211,6 @@ class Validator:
     #                 is valid, it returns True. If the move is invalid,
     #                 it returns False.
     #
-    #
     def validatePlayerMove(self, PlayerID, currPositionx, currPositiony, nextCoordx, nextCoordy, isSuggestion, GameBoardStatus):
         validationMesg = None
         isValidMove = False
@@ -424,54 +219,55 @@ class Validator:
         #Get current player's location
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(PlayerID)
 
-        #Determine whether current location is either corner room or hallway
-        currentCornerRoomName = self.checkRoomCoordRange(currPositionx, currPositiony)
-        (currentIsHallway, currentHallwayID) = self.checkHallwayCoordRange(currPositionx, currPositiony)
-        currentIsCharacterHomeSpace = self.checkHomeSpaceCoordRange(currPositionx, currPositiony)
+        #Get current information on room, hallway, and home space
+        (currentCornerRoomID, currentCornerRoomName) = self.checkRoomCoordRange(currPositionx, currPositiony)
+        (currentHallwayID, currentHallwayName) = self.checkHallwayCoordRange(currPositionx, currPositiony)
+        (currentCharacterHomeSpaceID, currentCharacterHomeSpaceName) = self.checkHomeSpaceCoordRange(currPositionx, currPositiony)
 
-        #Determine whether  next location is either corner room or hallway
-        nextCornerRoomName = self.checkRoomCoordRange(nextCoordx, nextCoordy)
-        (nextIsHallway, nextHallwayID) = self.checkHallwayCoordRange(nextCoordx, nextCoordy)
-        nextIsCharacterHomeSpace = self.checkHomeSpaceCoordRange(nextCoordx, nextCoordy)
+        #Get next information on room, hallway, and home space
+        (nextCornerRoomID, nextCornerRoomName) = self.checkRoomCoordRange(nextCoordx, nextCoordy)
+        (nextHallwayID, nextHallwayName) = self.checkHallwayCoordRange(nextCoordx, nextCoordy)
+        (nextCharacterHomeSpaceID, nextCharacterHomeSpaceName) = self.checkHomeSpaceCoordRange(currPositionx, currPositiony)
 
-        #Begin: If other room, set value for current and/or next room names
-        if currentCornerRoomName == False and currentIsHallway == False and \
-            currentIsCharacterHomeSpace == False:
-            # determine which other room
+        #Begin: If other room, set value for current and next movement
+        if currentCornerRoomName == False and currentHallwayName == False and \
+            currentCharacterHomeSpaceName == False:
+
+            # determine which other room: current
             for k in range(1, 4, 1):
-                if currPositionx in self.gameBoardOtherRoom[k]['x_index'] and \
-                    currPositiony in self.gameBoardOtherRoom[k]['y_index']:
+                if currPositionx in self.gameBoardOtherRoom[k]['xIndex'] and \
+                    currPositiony in self.gameBoardOtherRoom[k]['yIndex']:
                     currentRoomIdx = k
                     currentRoomID = self.gameBoardOtherRoom[k]["id"]
                     break
 
-        if nextCornerRoomName == False and nextIsHallway == False and \
-            nextIsCharacterHomeSpace == False:
-            # determine which other room
-            for l in range(1, 4, 1):
-                if nextCoordx in self.gameBoardOtherRoom[l]["x_index"] and \
-                    nextCoordy in self.gameBoardOtherRoom[l]["y_index"]:
-                    nextRoomName = self.gameBoardOtherRoom[l]["name"]
-                    break
-        #End: If other room, set value for current and/or next room names
+        if nextCornerRoomName == False and nextHallwayName == False and \
+            nextCharacterHomeSpaceName == False:
 
+            # determine which other room: next
+            for m in range(1, 4, 1):
+                if nextCoordx in self.gameBoardOtherRoom[m]['xIndex'] and \
+                    nextCoordy in self.gameBoardOtherRoom[m]['yIndex']:
+                    nextRoomName = self.gameBoardOtherRoom[m]["name"]
+                    break
+        #End: If other room, set value for current and next movement
 
         #Player is moving from home space
-        if currentIsCharacterHomeSpace != False:
-            homeAdjHall = self.gameBoardPlayersDict[currentIsCharacterHomeSpace]["hallway"]
-            homeAdjRoomA = self.gameBoardPlayersDict[currentIsCharacterHomeSpace]["adjacent_room_a"]
-            homeAdjRoomB = self.gameBoardPlayersDict[currentIsCharacterHomeSpace]["adjacent_room_b"]
+        if currentCharacterHomeSpaceID != -1:
+            homeAdjHall = self.gameBoardPlayersDict[currentCharacterHomeSpaceID]['hallway']
+            homeAdjRoomA = self.gameBoardPlayersDict[currentCharacterHomeSpaceID]['adjacentRoomA']
+            homeAdjRoomB = self.gameBoardPlayersDict[currentCharacterHomeSpaceID]['adjacentRoomB']
 
             #HomeNextMoveType1: Player is moving from home space to hallway, first move (not suggestion)
-            if nextIsHallway and isSuggestion == False:
-                if nextHallwayID == homeAdjHall:
+            if nextHallwayName != False and isSuggestion == False:
+                if nextHallwayName == homeAdjHall:
                     isValidMove = True
                 else:
                     isValidMove = False
                     validationMesg = "Invalid home space to hallway move. Did you mean the hallway between " + homeAdjRoomA.capitalize() + " and " + homeAdjRoomB.capitalize() + "?"
 
             #HomeNextMoveType2: Player is moving from home space to hallway, first move (suggestion)
-            elif nextIsHallway and isSuggestion:
+            elif nextHallwayName != False and isSuggestion:
                 isValidMove = True
 
             else:
@@ -491,13 +287,13 @@ class Validator:
                 isValidMove = True
 
             #CornerNextMoveType3: Validate player is going from corner room to adjacent hallway
-            elif nextIsHallway:
-                cornerAdjHall = self.gameBoardCornerRoom[currentCornerRoomName]["hallway"]
-                cornerAdjRoomA = self.gameBoardCornerRoom[currentCornerRoomName]["adjacent_room_a"]
-                cornerAdjRoomB = self.gameBoardCornerRoom[currentCornerRoomName]["adjacent_room_b"]
+            elif nextHallwayName != False:
+                cornerAdjHall = self.gameBoardCornerRoom[currentCornerRoomID]['hallway']
+                cornerAdjRoomA = self.gameBoardCornerRoom[currentCornerRoomID]['adjacentRoomA']
+                cornerAdjRoomB = self.gameBoardCornerRoom[currentCornerRoomID]['adjacentRoomB']
 
                 #CornerNextMoveType3a: not suggestion
-                if nextIsHallway and isSuggestion == False:
+                if nextHallwayName != False and isSuggestion == False:
                     if nextHallwayID == cornerAdjHall:
                         isValidMove = True
                     else:
@@ -505,7 +301,7 @@ class Validator:
                         validationMesg = "Invalid home space to hallway move. Did you mean the hallway between " + cornerAdjRoomA.capitalize() + " and " + cornerAdjRoomB.capitalize() + "?"
 
                 #CornerNextMoveType3b: suggestion
-                elif nextIsHallway and isSuggestion:
+                elif nextHallwayName != False and isSuggestion:
                     isValidMove = True
 
             #CornerNextMoveType4: Validate player is going from corner room to a non-corner room, suggestion move
@@ -518,16 +314,16 @@ class Validator:
                     validationMesg = "Invalid corner to non-corner room move."
 
         #Player is currently located in a hallway
-        elif currentIsHallway:
+        elif currentHallwayName != False:
             #HallwayNextMoveType1: Validate player is not going to hallway to hallway
-            if nextIsHallway == True:
+            if nextHallwayName != False:
                 isValidMove = False
                 validationMesg = "Invalid hallway move."
 
             #HallwayNextMoveType2: Validate player is going from hallway to adjacent room
             else:
-                hallAdjRoomA = self.gameBoardHallwaysDict[currentHallwayID]["adjacent_room_a"]
-                hallAdjRoomB = self.gameBoardHallwaysDict[currentHallwayID]["adjacent_room_b"]
+                hallAdjRoomA = self.gameBoardHallwaysDict[currentHallwayID]['adjacentRoomA']
+                hallAdjRoomB = self.gameBoardHallwaysDict[currentHallwayID]['adjacentRoomB']
 
                 if hallAdjRoomA == nextRoomName or hallAdjRoomB == nextRoomName:
                     isValidMove = True
@@ -538,8 +334,8 @@ class Validator:
         #Else, located in a non-corner room
         else:
             #NextMoveType1: Validate player is going from non-corner room to adjacent hallway
-            if nextIsHallway == True:
-                currRoomHalls = self.gameBoardOtherRoom[currentRoomIdx]["adjacent_hall"]
+            if nextHallwayName != False:
+                currRoomHalls = self.gameBoardOtherRoom[currentRoomIdx]['adjacentHall']
 
                 if nextHallwayID in currRoomHalls:
                     isValidMove = True
@@ -557,7 +353,7 @@ class Validator:
                     validationMesg = "Invalid non-corner to non-corner room move."
 
             #NextMoveType3: Confirm player is going from non-corner room to corner room because of a suggestion
-            elif nextCornerRoomName != "false":
+            elif nextCornerRoomName != False:
                 # If move is a result of a suggestion, valid move
                 if isSuggestion:
                     isValidMove = True
@@ -583,7 +379,6 @@ class Validator:
     # postcondition: The method validates the weapon's next move. If the move
     #                 is valid, it returns True. If the move is invalid,
     #                 it returns False.
-    #
     #
     def validateWeaponMove(self, WeaponID, currPositionx, currPositiony, nextCoordx, nextCoordy, isSuggestion, GameBoardStatus):
         return False
