@@ -40,14 +40,14 @@
     <p class="lead">It's your turn, player {{current_player}}</p>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped" style="color:white">
     {% for row in game_board %}
         <tr>
         {% for position in row %}
             {% if position != 'x' %}
-                <td align="center">{{ position }}</td>
+                <td align="center" style="background-color:#104E8B">{{ position }}</td>
             {% else %}
-                <td></td>
+                <td style="background-color:#FF8000"></td>
             {% endif %}
         {% endfor %}
        </tr>
