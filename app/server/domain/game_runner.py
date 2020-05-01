@@ -1,5 +1,6 @@
 from app.server.domain import validator
 from app.server.domain import player
+from app.server.domain.game_piece import GamePiece
 
 class GameRunner:
     def __init__(self, deck, envelope, player_list, weapon_list, game_board):
@@ -59,7 +60,8 @@ class GameRunner:
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
 
         checkMove = validator.Validator(curr_player_id, x_coordinate, y_coordinate)
-        isValid = checkMove.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, isSuggestion,  self.game_board_status)
+        isValid = checkMove.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, isSuggestion, self.game_board_status)
+
         return isValid
 
     # move_player(self, player_id, x_coordinate, y_coordinate, isSuggestion):
@@ -78,18 +80,18 @@ class GameRunner:
     def move_player(self, player_id, x_coordinate, y_coordinate, isSuggestion):
         isValidMove = False
         validation_message = None
-        curr_player = self.player_list[player_id]
-        (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player)
+        curr_player_id = self.player_list[player_id]
+        (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
 
         # Validate move and if valid, move player
-        (isValidMove, validation_message) = self.validatePlayerMove(curr_player, x_coordinate, y_coordinate, isSuggestion)
+        (isValidMove, validation_message) = self.validatePlayerMove(curr_player_id, x_coordinate, y_coordinate, isSuggestion)
 
         if isValidMove:
             #set previous space to blank
             self.game_board_status.board[curr_player_y][curr_player_x] = 'b'
 
-            #update current player's location to new coordinates
-            player.Player.update_coordinates(self, x_coordinate, y_coordinate)
+            # update current player's location to new coordinates
+            player.Player.update_coordinates(self.current_player, x_coordinate, y_coordinate)
 
             #update new location to curent player
             self.game_board_status.board[y_coordinate][x_coordinate] = player_id

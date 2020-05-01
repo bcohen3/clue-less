@@ -8,8 +8,8 @@ from app.server.domain.weapon_card import WeaponCard
 
 
 class Deck:
-    cards_by_id = [SuspectCard(0, "Miss Scarlet"), SuspectCard(1, "Mrs. White"), SuspectCard(2, "Mrs. Peacock"),
-                   SuspectCard(3, "Colonel Mustard"), SuspectCard(4, "Professor Plum"), SuspectCard(5, "Mr. Green"),
+    cards_by_id = [SuspectCard(0, "Miss Scarlet"), SuspectCard(1, "Colonel Mustard"), SuspectCard(2, "Mrs. White"),
+                   SuspectCard(3, "Mr. Green"), SuspectCard(4, "Mrs. Peacock"), SuspectCard(5, "Professor Plum"),
                    WeaponCard(6, "wrench"), WeaponCard(7, "candlestick"), WeaponCard(8, "lead pipe"),
                    WeaponCard(9, "rope"), WeaponCard(10, "revolver"), WeaponCard(11, "knife"), RoomCard(12, "kitchen"),
                    RoomCard(13, "ball room"), RoomCard(14, "conservatory"), RoomCard(15, "dining room"),
