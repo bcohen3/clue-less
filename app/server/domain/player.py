@@ -27,7 +27,7 @@ class Player(GamePiece):
     # @param x_coordinate integer representing the Player's next position, x coordinate
     # @param y_coordinate integer representing the Player's next position, y coordinate
     #
-    # postcondition: The method moves the updates the current player's x and y coordinates.
+    # postcondition: The method moves the player to the x and y coordinates.
     #
     def update_coordinates(self, x_coordinate, y_coordinate):
         self.x_coordinate = x_coordinate
