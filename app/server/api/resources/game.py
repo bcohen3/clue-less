@@ -33,6 +33,7 @@ def game_board():
     move_form = MoveForm()
     suggestion_form = SuggestionForm()
     suggestion_message = None
+    move_player_message = None
     accusation_message = None
 
     if request.method == 'POST':
@@ -41,8 +42,18 @@ def game_board():
             x_coordinate = form.data['x_coordinate']
             y_coordinate = form.data['y_coordinate']
 
-            game_runner.move_player(game_runner.current_player.id, x_coordinate, y_coordinate)
-            game_runner.update_current_player()
+            #Validate whether move and if valid, move player
+            (is_valid_move, validation_mesg, suggestion_locations, suggested_locations_mesg) = game_runner.move_player(game_runner.current_player.id, x_coordinate, y_coordinate, False)
+
+            if is_valid_move:
+                game_runner.update_current_player()
+            else:
+                move_player_message = validation_mesg
+
+            #If not suggested location, display message
+            if suggestion_locations == None:
+                suggested_locations_mesg
+
 
         form = SuggestionForm(request.form)
         if form.validate() is True:
@@ -77,4 +88,4 @@ def game_board():
 
     return render_template('pages/game_board.html', move_form=move_form, suggestion_form=suggestion_form,
                            game_board=game_board, current_player=current_player, suggestion_message=suggestion_message,
-                           accusation_message=accusation_message)
+                           accusation_message=accusation_message, move_player_message=move_player_message)
