@@ -18,6 +18,14 @@
       });
   });
   </script>
+  <style>
+    table {
+    border: 10px solid #FF8000;
+    }
+    tr {
+    height: 40px;
+    }
+  </style>
 </head>
 
 <div class="page-header">
@@ -44,10 +52,22 @@
     {% for row in game_board %}
         <tr>
         {% for position in row %}
-            {% if position != 'x' %}
-                <td align="center" style="background-color:#104E8B">{{ position }}</td>
-            {% else %}
-                <td style="background-color:#FF8000"></td>
+            {% if position == 'b' or position == 'p' %}
+                <td align="center" style="background-color:#104E8B"> </td>
+            {% elif position == 0 %}
+                <td style="background-color:#ffff00"></td>
+            {% elif position == 1 %}
+                <td style="background-color:#ff0000"></td>
+            {% elif position == 2 %}
+                <td style="background-color:#7CFC00"></td>
+            {% elif position == 3 %}
+                <td style="background-color:#FF00FF"></td>
+            {% elif position == 4 %}
+                <td style="background-color:#00FFFF"></td>
+            {% elif position == 5 %}
+                <td style="background-color:#FFC0CB"></td>
+            {% elif position == 'x' %}
+                <td style="background-color:white"></td>
             {% endif %}
         {% endfor %}
        </tr>
@@ -56,6 +76,8 @@
 
 <form method="post" class="move_form form-reset">
     <h3 class="form-heading">Move Player</h3>
+    <input type="submit" value="Move Player" class="btn btn-lg btn-primary btn-block">
+
     {{ move_form.x_coordinate(class_ = 'form-control first-input last-input', placeholder = move_form.x_coordinate.label.text) }}
     {{ move_form.y_coordinate(class_ = 'form-control first-input last-input', placeholder = move_form.y_coordinate.label.text) }}
     <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
@@ -64,6 +86,8 @@
 
 <form method="post" class="suggestion_form form-reset">
     <h3 class="form-heading">Make Suggestion</h3>
+    <input type="submit" value="Make A Suggestion" class="btn btn-lg btn-primary btn-block">
+
     {{ suggestion_form.character_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.character_id.label.text) }}
     {{ suggestion_form.weapon_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.weapon_id.label.text) }}
     {{ suggestion_form.room_id(class_ = 'form-control first-input last-input', placeholder = suggestion_form.room_id.label.text) }}
@@ -76,6 +100,7 @@
     {% endif %}
 
     {{ suggestion_form.hidden_tag() }}
+
 </form>
 
 {% endblock %}
