@@ -31,11 +31,18 @@ class GameRunner:
 
     def move_to_room(self, player_id, weapon_id, room_id, is_suggestion):
 
+        #Set previous player information
+        previous_player = self.current_player
+        (curr_player_x, curr_player_y) = player.Player.get_coordinates(previous_player)
+
         player_free_spot = self.game_board_status.find_free_spot_in_room(room_id)
         player_x_coordinate = player_free_spot.x_coordinate
         player_y_coordinate = player_free_spot.y_coordinate
 
         self.move_player(player_id, player_x_coordinate, player_y_coordinate, is_suggestion)
+
+        # Update suggested player information to new coordinates
+        player.Player.update_coordinates(self.player_list[player_id], player_x_coordinate, player_y_coordinate)
 
         #If weapon_id is not null
         if weapon_id != None:
@@ -45,6 +52,9 @@ class GameRunner:
 
             self.move_weapon(weapon_id, weapon_x_coordinate, weapon_y_coordinate)
 
+        # Reset coordinates to actual current player
+        self.current_player.x_coordinate = curr_player_x
+        self.current_player.y_coordinate = curr_player_y
 
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):

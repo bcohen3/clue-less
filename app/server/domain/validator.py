@@ -259,7 +259,7 @@ class Validator:
             if nextHallwayName != False:
                 currRoomHalls = self.gameBoardStatus.gameBoardOtherRoomDict[currentRoomIdx]['adjacentHall']
 
-                if nextHallwayID in currRoomHalls:
+                if self.gameBoardStatus.gameBoardHallwaysDict[int(nextHallwayID)]['name'] in currRoomHalls:
                     isValidMove = True
                 else:
                     isValidMove = False
