@@ -1,0 +1,38 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<body style="background-color:#104E8B;">
+<!-- header-->
+<div class="page-header"><font color="#FF8000">
+  <h1><center>The Classic Mystery Game</center></h1>
+</font>
+</div>
+
+<!--Game Rules Defined -->
+
+<div><font color="white">
+<h2><center>Welcome to the Clue-Less Game!</center></h2>
+<h3 class="lead"><center>Are you ready for the most intriguing investigation you will ever be encounter?</center></h3>
+ <p> How to play:</p>
+ <p>Clue has 21 cards, six suspects, nine rooms, and six weapons. That means there are many possible combinations for who committed the murder, in which room, and with what object. The cards you and your opponents hold are not the killing cards. So, by process of elimination, you will want to mark off your cards and your opponents' cards.</p>
+ 
+ <ol>
+ <li>Select your player</li>
+ <li>Once you have selected player click the button "Start Game" to begin playing</li>
+ <li>The game will begin with cards being distributed and then the game will begin</li>
+ <li>You can only make a suggestion when you enter a room</li>
+ <li>You must be in the same room as the opponent player you are accusing and the weapon you think they used.</li>
+ <li>If someone suggests you and drags you to a new room, make a suggestion there on your next turn.</li>
+ <li>You can suggest any character or any weapon from anywhere on the board, but your room suggestions are limited by your location</li>
+ </ol>
+ 
+ 
+ <br>
+ <br>
+ <br>
+ <center> <a href="{{ url_for('pages.start_game') }}" class="btn btn-primary btn-warning" role="button">Play</a></center>
+</font>
+</div>
+</br>
+  
+{% endblock %}
