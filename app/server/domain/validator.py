@@ -27,6 +27,7 @@ class Validator:
         self.currPositionx = currPositionx
         self.currPositiony = currPositiony
         self.gameBoardStatus = gameBoardStatus
+        self.makeSuggestion = None
 
         #non-corner rooms list
         self.otherRooms = {self.gameBoardStatus.gameBoardOtherRoomDict[0]['name'],
@@ -129,6 +130,7 @@ class Validator:
     def validatePlayerMove(self, PlayerID, currPositionx, currPositiony, nextCoordx, nextCoordy, isSuggestion):
         validationMesg = None
         isValidMove = False
+        self.makeSuggestion = False
         currentRoomIdx = 0
         nextRoomName = None
 
@@ -240,15 +242,25 @@ class Validator:
                 isValidMove = False
                 validationMesg = "Invalid hallway move."
 
-            #HallwayNextMoveType2: Validate player is going from hallway to adjacent room
+            # HallwayNextMoveType2: Hallway to another room because of suggestion
+            elif isSuggestion == True:
+                isValidMove = True
+
+            #HallwayNextMoveType3: Validate player is going from hallway to adjacent room
             else:
                 hallAdjRoomA = self.gameBoardStatus.gameBoardHallwaysDict[int(currentHallwayID)]['adjacentRoomA']
                 hallAdjRoomB = self.gameBoardStatus.gameBoardHallwaysDict[int(currentHallwayID)]['adjacentRoomB']
 
                 if nextCornerRoomName != False and hallAdjRoomA == nextCornerRoomName or hallAdjRoomB == nextCornerRoomName:
                     isValidMove = True
+                    self.makeSuggestion = True
+                    validationMesg = "Please make a suggestion."
+
                 elif nextCornerRoomName == False and hallAdjRoomA == nextRoomName or hallAdjRoomB == nextRoomName:
                     isValidMove = True
+                    self.makeSuggestion = True
+                    validationMesg = "Please make a suggestion."
+
                 else:
                    isValidMove = False
                    validationMesg = "Invalid hallway to adjacent room move."
@@ -284,7 +296,7 @@ class Validator:
                     validationMesg = "Invalid non-corner to corner room move."
 
         #return validation result
-        return isValidMove, validationMesg
+        return isValidMove, validationMesg, self.makeSuggestion
 
     # findValidLocations(self, playerID)
     #
@@ -299,6 +311,7 @@ class Validator:
        locationsMesg = None
        locationIsAvailable = None
        secretLocationIsAvailable = None
+       makeAccusation = False
 
        (currPositionx, currPositiony) = player.Player.get_coordinates(playerID)
        (HallwayID, HallwayName) = self.checkHallwayCoordRange(currPositionx, currPositiony)
@@ -383,7 +396,8 @@ class Validator:
 
                 # Hallway is currently occupied, room is not a corner room
                 if locationIsAvailable != None and self.gameBoardStatus.roomsOnlyDict[u]['isCornerRoom'] == 0:
-                    locationsMesg = "Adjacent hallways are full."
+                    locationsMesg = "Adjacent hallways are full. Please make an accusation."
+                    makeAccusation = True
                 # Hallway is currently occupied and passage room is full
                 elif locationIsAvailable != None and secretLocationIsAvailable == None:
                     locationsMesg = "Adjancent hallways and secret passage are occupied or full."

@@ -9,6 +9,7 @@ class GameRunner:
         self.player_list = player_list
         self.weapon_list = weapon_list
         self.current_player = player_list[0]
+        self.remain_players = 6
         self.game_board_status = game_board
         self.weapon_id = None
 
@@ -56,6 +57,8 @@ class GameRunner:
         self.current_player.x_coordinate = curr_player_x
         self.current_player.y_coordinate = curr_player_y
 
+        temp = 1
+
     def check_accusation(self, accusation):
         if set(accusation.get_card_ids()) == set(self.envelope.get_card_ids()):
             self.current_player.is_winner = True
@@ -85,12 +88,12 @@ class GameRunner:
 
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
         check_move = validator.Validator(curr_player_id, x_coordinate, y_coordinate, self.game_board_status)
-        (is_valid, validation_mesg) = check_move.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, is_suggestion)
+        (is_valid, validation_mesg, makeSuggestion) = check_move.validatePlayerMove(curr_player_id, curr_player_x, curr_player_y, x_coordinate, y_coordinate, is_suggestion)
 
         if not is_suggestion:
             (suggested_locations, suggested_locations_mesg) = check_move.findValidLocations(player_id)
 
-        return is_valid, validation_mesg, suggested_locations, suggested_locations_mesg
+        return is_valid, validation_mesg, suggested_locations, suggested_locations_mesg, makeSuggestion
 
 
     # move_player(self, player_id, x_coordinate, y_coordinate, isSuggestion):
@@ -112,7 +115,7 @@ class GameRunner:
         (curr_player_x, curr_player_y) = player.Player.get_coordinates(curr_player_id)
 
         # Validate move and if valid, move player
-        (is_valid_move, validation_message, suggested_locations, suggested_locations_mesg) = self.validate_move(curr_player_id, x_coordinate, y_coordinate, is_suggestion)
+        (is_valid_move, validation_message, suggested_locations, suggested_locations_mesg, makeSuggestion) = self.validate_move(curr_player_id, x_coordinate, y_coordinate, is_suggestion)
 
         if is_valid_move:
             #set previous space to blank
@@ -124,10 +127,10 @@ class GameRunner:
             #update new location to current player
             self.game_board_status.board[y_coordinate][x_coordinate] = player_id
 
-            return True, validation_message, suggested_locations, suggested_locations_mesg
+            return True, validation_message, suggested_locations, suggested_locations_mesg, makeSuggestion
 
         else:
-            return False, validation_message, suggested_locations, suggested_locations_mesg
+            return False, validation_message, suggested_locations, suggested_locations_mesg, makeSuggestion
 
     def get_weapon_by_id(self, weapon_id):
         for weapon in self.weapon_list:
@@ -165,17 +168,15 @@ class GameRunner:
         next_player_id = current_player_id + 1
 
         #If next player count does not exceed total number of elements in list
-        if next_player_id <= len(self.player_list) - 1:
+        #if next_player_id <= len(self.player_list):
+        if next_player_id < len(self.player_list) and self.remain_players != 0:
             while self.player_list[next_player_id].is_loser is True:
                 next_player_id += 1
 
             self.current_player = self.player_list[next_player_id]
 
-        #Else, reset and find next player
-        else:
+        elif self.remain_players != 0:
             next_player_id = 0
-            while self.player_list[next_player_id].is_loser is True:
-                next_player_id += 1
-
             self.current_player = self.player_list[next_player_id]
+
 
