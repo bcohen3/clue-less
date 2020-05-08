@@ -34,6 +34,7 @@ def game_board():
     suggestion_form = SuggestionForm()
     suggestion_message = None
     accusation_message = None
+    card_value = None
 
     if request.method == 'POST':
         form = MoveForm(request.form)
@@ -77,4 +78,4 @@ def game_board():
 
     return render_template('pages/game_board.html', move_form=move_form, suggestion_form=suggestion_form,
                            game_board=game_board, current_player=current_player, suggestion_message=suggestion_message,
-                           accusation_message=accusation_message)
+                           accusation_message=accusation_message, card_value=card_value)
