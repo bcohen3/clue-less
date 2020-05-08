@@ -40,6 +40,33 @@
 <div>
     {% if suggestion_message %}
        <p class="lead">{{suggestion_message}}</p>
+       {% if card_value == "Miss Scarlet" %}
+           <p align="center"><img src="static/cards/Kelly.png" height="288" width="173"></p>
+       {% elif card_value == "Mrs. White" %}
+           <p align="center"><img src="static/cards/Phyllis.png" height="288" width="173"></p>
+       {% elif card_value == "Mrs. Peacock" %}
+           <p align="center"><img src="static/cards/Pam.png" height="288" width="173"></p>
+       {% elif card_value == "Colonel Mustard" %}
+           <p align="center"><img src="static/cards/Dwight.png" height="288" width="173"></p>
+       {% elif card_value == "Professor Plum" %}
+           <p align="center"><img src="static/cards/Michael.png" height="288" width="173"></p>
+       {% elif card_value == "Mr. Green" %}
+           <p align="center"><img src="static/cards/Jim.png" height="288" width="173"></p>
+       {% elif card_value == "wrench" %}
+           <p align="center"><img src="static/cards/Taser.png" height="288" width="173"></p>
+       {% elif card_value == "candlestick" %}
+           <p align="center"><img src="static/cards/Crossbow.png" height="288" width="173"></p>
+       {% elif card_value == "lead pipe" %}
+           <p align="center"><img src="static/cards/Samurai_sword.png" height="288" width="173"></p>
+       {% elif card_value == "rope" %}
+           <p align="center"><img src="static/cards/Swiss_army_knife.png" height="288" width="173"></p>
+       {% elif card_value == "revolver" %}
+           <p align="center"><img src="static/cards/Stapler.png" height="288" width="173"></p>
+       {% elif card_value == "knife" %}
+           <p align="center"><img src="static/cards/Pepper_spray.png" height="288" width="173"></p>
+       {% elif card_value == "library" %}
+           <p align="center"><img src="static/cards/Pepper_spray.png" height="288" width="173"></p>
+       {% endif %}
     {% endif %}
 </div>
 
