@@ -23,7 +23,12 @@
     border: 10px solid #FF8000;
     }
     tr {
-    height: 40px;
+    height: 45px;
+    width: 45px;
+    }
+    td {
+    height: 45px;
+    width: 45px;
     }
   </style>
 </head>
@@ -48,26 +53,40 @@
     <p class="lead">It's your turn, player {{current_player}}</p>
 </div>
 
-<table class="table table-striped" style="color:white">
+<table class="table table-striped">
     {% for row in game_board %}
         <tr>
         {% for position in row %}
-            {% if position == 'b' or position == 'p' %}
+            {% if position == 'b' %}
                 <td align="center" style="background-color:#104E8B"> </td>
-            {% elif position == 0 %}
-                <td style="background-color:#ffff00"></td>
-            {% elif position == 1 %}
-                <td style="background-color:#ff0000"></td>
-            {% elif position == 2 %}
-                <td style="background-color:#7CFC00"></td>
-            {% elif position == 3 %}
-                <td style="background-color:#FF00FF"></td>
-            {% elif position == 4 %}
-                <td style="background-color:#00FFFF"></td>
-            {% elif position == 5 %}
-                <td style="background-color:#FFC0CB"></td>
+            {% elif position == 'p' %}
+                <td align="center" style="background-image: url(../../static/images2/SecretPassage.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
             {% elif position == 'x' %}
                 <td style="background-color:white"></td>
+            {% elif position == 0 %}
+                <td align="center" style="background-image: url(../../static/images2/Dwight.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 1 %}
+                <td align="center" style="background-image: url(../../static/images2/Kelly.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 2 %}
+                <td align="center" style="background-image: url(../../static/images2/Michael.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 3 %}
+                <td align="center" style="background-image: url(../../static/images2/Pam.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 4 %}
+                <td align="center" style="background-image: url(../../static/images2/Jim.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 5 %}
+                <td align="center" style="background-image: url(../../static/images2/Phyllis.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 6 %}
+                <td align="center" style="background-image: url(../../static/images2/SwissArmyKnife.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 7 %}
+                <td align="center" style="background-image: url(../../static/images2/PepperSpray.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 8 %}
+                <td align="center" style="background-image: url(../../static/images2/Crossbow.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 9 %}
+                <td align="center" style="background-image: url(../../static/images2/Stapler.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 10 %}
+                <td align="center" style="background-image: url(../../static/images2/SamuraiSword.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
+            {% elif position == 11 %}
+                <td align="center" style="background-image: url(../../static/images2/Taser.png);background-repeat:no-repeat;background-color:#104E8B;background-position:center;"></td>
             {% endif %}
         {% endfor %}
        </tr>
