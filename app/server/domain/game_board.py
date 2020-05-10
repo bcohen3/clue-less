@@ -39,27 +39,27 @@ class GameBoard:
       # Begin: Create room, hallways and home attributes
       # Build game board non-corner rooms dictionary
       self.gameBoardOtherRoomDict = {
-         0: {"id": 17, "name": "hall", "altname": "Warehouse",
+         0: {"id": 17, "name": "hall", "altname": "Michaels Office",
              "isCornerRoom": 0, "type": "room",
              "adjacentHall": ('A', 'B', 'D'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": None,
              "xIndex": set(range(5, 8, 1)), "yIndex": set(range(1, 4, 1))},
-         1: {"id": 19, "name": "library", "altname": "Conference Room",
+         1: {"id": 19, "name": "library", "altname": "Bathroom",
              "isCornerRoom": 0, "type": "room",
              "adjacentHall": ('C', 'F', 'H'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": None,
              "xIndex": set(range(1, 4, 1)), "yIndex": set(range(5, 8, 1))},
-         2: {"id": 20, "name": "billiard room", "altname": "Reception",
+         2: {"id": 20, "name": "billiard room", "altname": "Break Room",
              "isCornerRoom": 0, "type": "room",
              "adjacentHall": ('D', 'F', 'I', 'G'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": None,
              "xIndex": set(range(5, 8, 1)), "yIndex": set(range(5, 8, 1))},
-         3: {"id": 15, "name": "dining room", "altname": "Michaels Office",
+         3: {"id": 15, "name": "dining room", "altname": "The Annex",
              "isCornerRoom": 0, "type": "room",
              "adjacentHall": ('E', 'G', 'J'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": None,
              "xIndex": set(range(9, 12, 1)), "yIndex": set(range(5, 8, 1))},
-         4: {"id": 13, "name": "ball room", "altname": "Vance Refrigeration",
+         4: {"id": 13, "name": "ball room", "altname": "Warehouse",
              "isCornerRoom": 0, "type": "room",
              "adjacentHall": ('K', 'I', 'L'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": None,
@@ -68,25 +68,25 @@ class GameBoard:
 
       # Build game board corner rooms dictionary
       self.gameBoardCornerRoomDict = {
-         5: {"id": 18, "name": "study", "altname": "The Annex",
+         5: {"id": 18, "name": "study", "altname": "Reception",
              "isCornerRoom": 1, "type": "room",
              "adjacentHall": ('A', 'C'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": "kitchen",
              "xIndex": set(range(1, 4, 1)),
              "yIndex": set(range(1, 4, 1))},
-         6: {"id": 16, "name": "lounge", "altname": "Break Room",
+         6: {"id": 16, "name": "lounge", "altname": "Conference Room",
              "isCornerRoom": 1, "type": "room",
              "adjacentHall": ('B', 'E'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": "conservatory",
              "xIndex": set(range(9, 12, 1)),
              "yIndex": set(range(1, 4, 1))},
-         7: {"id": 14, "name": "conservatory", "altname": "Bathroom",
+         7: {"id": 14, "name": "conservatory", "altname": "Lobby",
              "isCornerRoom": 1, "type": "room",
              "adjacentHall": ('H', 'K'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": "lounge",
              "xIndex": set(range(1, 4, 1)),
              "yIndex": set(range(9, 12, 1))},
-         8: {"id": 12, "name": "kitchen", "altname": "Lobby",
+         8: {"id": 12, "name": "kitchen", "altname": "Vance Refrigeration",
              "isCornerRoom": 1, "type": "room",
              "adjacentHall": ('J', 'L'), "adjacentRoomA": None,
              "adjacentRoomB": None, "secretPassage": "study",
@@ -207,10 +207,10 @@ class GameBoard:
 
       # passage coords list
       self.passageCoords = {
-         0: {"id": 18, "cornerRoom": "study", "xIndex": 3, "yIndex": 3},
-         1: {"id": 16, "cornerRoom": "lounge", "xIndex": 9, "yIndex": 3},
-         2: {"id": 12, "cornerRoom": "kitchen", "xIndex": 9, "yIndex": 9},
-         3: {"id": 14, "cornerRoom": "conservatory", "xIndex": 3, "yIndex": 9}
+         0: {"id": 18, "cornerRoom": "study", "altname": "Reception", "xIndex": 3, "yIndex": 3},
+         1: {"id": 16, "cornerRoom": "lounge", "altname": "Conference Room", "xIndex": 9, "yIndex": 3},
+         2: {"id": 12, "cornerRoom": "kitchen", "altname": "Vance Refrigeration", "xIndex": 9, "yIndex": 9},
+         3: {"id": 14, "cornerRoom": "conservatory", "altname": "Lobby", "xIndex": 3, "yIndex": 9}
       }
 
    def find_free_spot_in_room(self, room_id):
